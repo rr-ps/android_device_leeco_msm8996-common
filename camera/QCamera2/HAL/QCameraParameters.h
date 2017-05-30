@@ -25,6 +25,7 @@
 
 // System dependencies
 #include <CameraParameters.h>
+//#include <camera/CameraParameters.h>
 #include <utils/Errors.h>
 
 // Camera dependencies
@@ -33,6 +34,8 @@
 #include "QCameraParametersIntf.h"
 #include "QCameraThermalAdapter.h"
 #include "QCameraCommon.h"
+#include "CameraParameters.h"
+
 
 extern "C" {
 #include "mm_jpeg_interface.h"
