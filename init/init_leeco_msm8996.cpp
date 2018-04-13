@@ -105,8 +105,6 @@ void init_target_properties()
             property_set("persist.data.iwlan.enable", "true");
             // Single SIM
             property_set("persist.radio.multisim.config", "NA");
-            // NFC
-            property_set("persist.nfc.smartcard.config", "SIM1,eSE1");
             unknownDevice = 0;
         }
         else if (!strncmp(device.c_str(), "le_zl1", 6)) {
@@ -116,8 +114,6 @@ void init_target_properties()
             property_set("persist.data.iwlan.enable", "false");
             // Dual SIM
             property_set("persist.radio.multisim.config", "dsds");
-            // NFC
-            property_set("persist.nfc.smartcard.config", "SIM1,SIM2,eSE1");
             unknownDevice = 0;
         }
         else if (!strncmp(device.c_str(), "le_x2_na_oversea", 16)) {
@@ -125,8 +121,6 @@ void init_target_properties()
             property_override_dual("ro.product.model", "ro.vendor.product.model", "LEX829");
             // Dual SIM
             property_set("persist.radio.multisim.config", "dsds");
-            // NFC
-            property_set("persist.nfc.smartcard.config", "SIM1,SIM2,eSE1");
             unknownDevice = 0;
         }
         else if (!strncmp(device.c_str(), "le_x2_india", 11)) {
@@ -134,8 +128,6 @@ void init_target_properties()
             property_override_dual("ro.product.model", "ro.vendor.product.model", "LEX821");
             // Dual SIM
             property_set("persist.radio.multisim.config", "dsds");
-            // NFC
-            property_set("persist.nfc.smartcard.config", "SIM1,SIM2,eSE1");
             unknownDevice = 0;
         }
         else if (!strncmp(device.c_str(), "le_x2", 5)) {
@@ -143,8 +135,6 @@ void init_target_properties()
             property_override_dual("ro.product.model", "ro.vendor.product.model", "LEX820");
             // Dual SIM
             property_set("persist.radio.multisim.config", "dsds");
-            // NFC
-            property_set("persist.nfc.smartcard.config", "SIM1,SIM2,eSE1");
             unknownDevice = 0;
         }
     }
