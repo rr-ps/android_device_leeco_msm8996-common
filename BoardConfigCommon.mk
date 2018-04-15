@@ -211,23 +211,11 @@ BOARD_HAS_LARGE_FILESYSTEM := true
 TARGET_USERIMAGES_USE_EXT4 := true
 TARGET_USERIMAGES_USE_F2FS := true
 
-ifeq ($(RECOVERY_VARIANT),twrp)
--include $(PLATFORM_PATH)/twrp_recovery.mk
-TARGET_RECOVERY_FSTAB := $(PLATFORM_PATH)/rootdir/recovery/twrp.fstab
-BOARD_HAS_NO_REAL_SDCARD := true
-RECOVERY_SDCARD_ON_DATA := true
-TARGET_RECOVERY_QCOM_RTC_FIX := true
-TW_BRIGHTNESS_PATH := /sys/class/leds/lcd-backlight/brightness
-TW_DEFAULT_BRIGHTNESS := "160"
-TW_EXCLUDE_DEFAULT_USB_INIT := true
-TW_INCLUDE_CRYPTO := true
-TW_INPUT_BLACKLIST := "hbtp_vm"
-TW_EXTRA_LANGUAGES := true
-TW_INCLUDE_NTFS_3G := true
-TW_THEME := portrait_hdpi
-else
-USE_CLANG_PLATFORM_BUILD := true
-TARGET_RECOVERY_FSTAB := $(PLATFORM_PATH)/rootdir/recovery/fstab.qcom
+TARGET_RECOVERY_FSTAB := $(PLATFORM_PATH)/rootdir/recovery/fstab.recovery
+
+# TWRP
+ifeq ($(WITH_TWRP),true)
+include $(PLATFORM_PATH)/twrp.mk
 endif
 
 # SELinux
