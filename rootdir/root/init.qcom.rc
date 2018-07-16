@@ -33,8 +33,6 @@ on early-init
     mount debugfs debugfs /sys/kernel/debug
     chmod 0755 /sys/kernel/debug
 
-    mkdir /firmware 0771 system system
-    mkdir /bt_firmware 0771 system system
     symlink /data/tombstones /tombstones
     mkdir /dsp 0771 media media
 
@@ -574,7 +572,7 @@ on boot
     write /sys/bus/msm_subsys/devices/subsys5/restart_level "related"
 
 on property:sys.boot_completed=1
-    write /dev/kmsg "Boot completed "
+    write /dev/kmsg "Boot completed"
     # end boot time fs tune
     write /sys/block/sda/queue/read_ahead_kb 512
     write /sys/block/sda/queue/nr_requests 512
@@ -628,12 +626,13 @@ service perfd /vendor/bin/perfd
    socket perfd seqpacket 0666 root system
    writepid /dev/cpuset/system-background/tasks
 
-service thermal-engine /vendor/bin/thermal-engine
+service thermal-engine /vendor/bin/thermal-engine -c ${sys.qcom.thermalcfg:-/vendor/etc/thermal-engine-8996.conf}
    class main
    user root
    socket thermal-send-client stream 0666 system system
    socket thermal-recv-client stream 0660 system system
    socket thermal-recv-passive-client stream 0666 system system
+   socket thermal-send-rule stream 0660 system system
    group root
    writepid /dev/cpuset/system-background/tasks
 
@@ -647,11 +646,6 @@ service adsprpcd /vendor/bin/adsprpcd
    class main
    user media
    group media
-
-service audiod /vendor/bin/audiod
-   class late_start
-   user system
-   group system
 
 service imsqmidaemon /vendor/bin/imsqmidaemon
     class main
@@ -737,13 +731,6 @@ service mdtpd /system/vendor/bin/mdtpd
     user root
     group system radio drmrpc
 
-service iop /system/vendor/bin/iop
-    class main
-    user root
-    group root
-    disabled
-    socket iop seqpacket 0666 root system
-
 service ssr_setup /system/bin/ssr_setup
     oneshot
     disabled
@@ -794,7 +781,6 @@ on property:vold.decrypt=trigger_restart_min_framework
 
 on property:vold.decrypt=trigger_restart_framework
     start audio-hal-2-0
-    start config_bt_addr
 
 on property:persist.env.fastdorm.enabled=true
     setprop persist.radio.data_no_toggle 1
@@ -802,7 +788,7 @@ on property:persist.env.fastdorm.enabled=true
 service cnd /vendor/bin/cnd
     class main
     socket cnd stream 660 root inet
-    group root
+    group root wakelock
     writepid /dev/cpuset/system-background/tasks
 
 service dpmQmiMgr /system/vendor/bin/dpmQmiMgr
@@ -839,13 +825,6 @@ service start_hci_filter /system/vendor/bin/wcnss_filter
     seclabel u:r:wcnss_filter:s0
     disabled
 
-service config_bt_addr /system/vendor/bin/btnvtool -O
-    class core
-    user bluetooth
-    group bluetooth radio
-    oneshot
-    seclabel u:r:btnvtool:s0
-
 on property:wc_transport.start_root=true
     start hci_filter_root
 
@@ -859,7 +838,7 @@ service hci_filter_root /system/bin/wcnss_filter
     seclabel u:r:wcnss_filter:s0
     disabled
 
-service ftmd /system/bin/logwrapper /system/bin/ftmdaemon
+service ftmd /system/bin/ftmdaemon
     class late_start
     user root
     group bluetooth net_bt_admin misc oem_2901 net_bt
@@ -947,15 +926,17 @@ service loc_launcher /vendor/bin/loc_launcher
     # loc_launcher will start as root and set its uid to gps
     class late_start
     group gps inet diag wifi
+    writepid /dev/cpuset/system-background/tasks
 
 on property:crypto.driver.load=1
     insmod /system/lib/modules/qce.ko
     insmod /system/lib/modules/qcedev.ko
 
-service atfwd /system/bin/ATFWD-daemon
+service atfwd /vendor/bin/ATFWD-daemon
     class late_start
     user system
     group system radio
+    writepid /dev/cpuset/system-background/tasks
 
 on property:ro.data.large_tcp_window_size=true
     # Adjust socket buffer to enlarge TCP receive window for high bandwidth (e.g. DO-RevB)
@@ -995,12 +976,6 @@ service msm_irqbalance /system/bin/msm_irqbalance -f /system/vendor/etc/msm_irqb
     disabled
     writepid /dev/cpuset/system-background/tasks
 
-service qseeproxydaemon /vendor/bin/qseeproxydaemon
-    class late_start
-    user system
-    group system
-    writepid /dev/cpuset/system-background/tasks
-
 service qcom-sh /system/bin/sh /init.qcom.sh
     class late_start
     user root
@@ -1015,8 +990,9 @@ service hvdcp_opti /vendor/bin/hvdcp_opti
 
 service charger /charger
     class charger
-    group system graphics
+    group system graphics log
     seclabel u:r:charger:s0
+    writepid /dev/cpuset/system-background/tasks
 
 on charger
     start hvdcp_opti
