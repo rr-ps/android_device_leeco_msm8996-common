@@ -300,6 +300,10 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/privapp-permissions-qti.xml:system/etc/permissions/privapp-permissions-qti.xml \
     $(LOCAL_PATH)/configs/qti_whitelist.xml:system/etc/sysconfig/qti_whitelist.xml
 
+# RRPS
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/configs/rrps_whitelist.xml:system/etc/sysconfig/rrps_whitelist.xml
+
 # QMI
 PRODUCT_PACKAGES += \
     libjson
@@ -388,6 +392,10 @@ PRODUCT_COPY_FILES += \
 PRODUCT_COPY_FILES += \
     kernel/leeco/msm8996/drivers/staging/qcacld-2.0/firmware_bin/WCNSS_cfg.dat:$(TARGET_COPY_OUT_VENDOR)/etc/wifi/WCNSS_cfg.dat \
     $(LOCAL_PATH)/wifi/WCNSS_qcom_cfg.ini:$(TARGET_COPY_OUT_VENDOR)/etc/wifi/WCNSS_qcom_cfg.ini
+
+# LePref settigs modules
+PRODUCT_PACKAGES += \
+    LePref
 
 # Model is set via init library
 PRODUCT_SYSTEM_PROPERTY_BLACKLIST := \

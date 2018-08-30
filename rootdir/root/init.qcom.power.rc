@@ -1,17 +1,24 @@
-on init
-    # Disable UFS powersaving
-    write /sys/devices/soc/${ro.boot.bootdevice}/clkscale_enable 0
-    write /sys/devices/soc/${ro.boot.bootdevice}/clkgate_enable 0
-    write /sys/devices/soc/${ro.boot.bootdevice}/${ro.boot.bootdevice}:ufs_variant/pm_qos_enable 0
-    write /sys/module/lpm_levels/parameters/sleep_disabled Y
+on charger
+    wait /dev/block/platform/soc/${ro.boot.bootdevice}
+    symlink /dev/block/platform/soc/${ro.boot.bootdevice} /dev/block/bootdevice
+    mount ext4 /dev/block/bootdevice/by-name/system /system ro barrier=1
+    write /sys/devices/system/cpu/cpu1/online 0
+    write /sys/devices/system/cpu/cpu2/online 0
+    write /sys/devices/system/cpu/cpu3/online 0
+    write /sys/module/msm_thermal/core_control/cpus_offlined 14
+    write /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor "powersave"
+    write /sys/module/lpm_levels/parameters/sleep_disabled "N"
 
-on boot
-    # Bring back main cores CPU 0,2
-    write /sys/devices/system/cpu/cpu0/online 1
-    write /sys/devices/system/cpu/cpu2/online 1
+#on boot
+on init
+    # Bring up CPUs
+    trigger init-cpus
+
+    write /sys/module/lpm_levels/parameters/sleep_disabled "Y"
 
     # Update cpusets now that CPUs are up
     write /dev/cpuset/foreground/cpus 0-3
+    write /dev/cpuset/foreground/boost/cpus 0-3
     write /dev/cpuset/background/cpus 0-3
     write /dev/cpuset/system-background/cpus 0-3
     write /dev/cpuset/top-app/cpus 0-3
@@ -32,62 +39,110 @@ on enable-low-power
     write /sys/module/lpm_levels/parameters/sleep_disabled "N"
 
     # Set GPU idle frequency to 133 MHz
-    write /sys/class/kgsl/kgsl-3d0/default_pwrlevel 6
+    write /sys/class/kgsl/kgsl-3d0/default_pwrlevel 7
 
+on init-cpus
     # Disable thermal bcl hotplug to switch governor
     write /sys/module/msm_thermal/core_control/enabled 0
+    write /sys/devices/soc/soc:qcom,bcl/mode "disable"
+    write /sys/devices/soc/soc:qcom,bcl/hotplug_mask 0
+    write /sys/devices/soc/soc:qcom,bcl/hotplug_soc_mask 0
+    write /sys/devices/soc/soc:qcom,bcl/mode "enable"
 
-    # Enable Adaptive LMK
-    write /sys/module/lowmemorykiller/parameters/enable_adaptive_lmk 1
-    write /sys/module/lowmemorykiller/parameters/vmpressure_file_min 81250
+    # Bring back main cores CPU 0,2
+    write /sys/devices/system/cpu/cpu0/online 1
+    write /sys/devices/system/cpu/cpu2/online 1
 
-    # Configure governor settings for little cluster
+    # Configure governor settings for LITTLE cluster
     write /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor "interactive"
     write /sys/devices/system/cpu/cpu0/cpufreq/interactive/use_sched_load 1
     write /sys/devices/system/cpu/cpu0/cpufreq/interactive/use_migration_notif 1
-    write /sys/devices/system/cpu/cpu0/cpufreq/interactive/above_hispeed_delay 19000
-    write /sys/devices/system/cpu/cpu0/cpufreq/interactive/go_hispeed_load 90
-    write /sys/devices/system/cpu/cpu0/cpufreq/interactive/timer_rate 20000
-    write /sys/devices/system/cpu/cpu0/cpufreq/interactive/hispeed_freq 960000
+    write /sys/devices/system/cpu/cpu0/cpufreq/interactive/above_hispeed_delay "19000 480000:20000 960000:80000"
+    write /sys/devices/system/cpu/cpu0/cpufreq/interactive/go_hispeed_load 98
+    write /sys/devices/system/cpu/cpu0/cpufreq/interactive/timer_rate 50000
+    write /sys/devices/system/cpu/cpu0/cpufreq/interactive/timer_slack 20000
+    write /sys/devices/system/cpu/cpu0/cpufreq/interactive/hispeed_freq 480000
     write /sys/devices/system/cpu/cpu0/cpufreq/interactive/io_is_busy 1
-    write /sys/devices/system/cpu/cpu0/cpufreq/interactive/target_loads 80
+    write /sys/devices/system/cpu/cpu0/cpufreq/interactive/target_loads "80 460000:95 600000:95 672000:95 787000:95 864000:98 960000:98 1248000:98 1440000:98"
     write /sys/devices/system/cpu/cpu0/cpufreq/interactive/min_sample_time 19000
     write /sys/devices/system/cpu/cpu0/cpufreq/interactive/max_freq_hysteresis 79000
     write /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq 307200
     write /sys/devices/system/cpu/cpu0/cpufreq/interactive/ignore_hispeed_on_notif 1
+    write /sys/devices/system/cpu/cpu0/cpufreq/interactive/fast_ramp_down 1
     write /sys/devices/system/cpu/cpu0/cpufreq/interactive/enable_prediction 1
+    write /sys/devices/system/cpu/cpu0/cpufreq/interactive/powersave_bias 1
+    write /sys/devices/system/cpu/cpu0/cpufreq/interactive/screen_off_maxfreq 960000
 
-    # Configure governor settings for big cluster
+     # Configure governor settings for big cluster
     write /sys/devices/system/cpu/cpu2/cpufreq/scaling_governor "interactive"
     write /sys/devices/system/cpu/cpu2/cpufreq/interactive/use_sched_load 1
     write /sys/devices/system/cpu/cpu2/cpufreq/interactive/use_migration_notif 1
-    write /sys/devices/system/cpu/cpu2/cpufreq/interactive/above_hispeed_delay "19000 1400000:39000 1700000:19000 2100000:79000"
-    write /sys/devices/system/cpu/cpu2/cpufreq/interactive/go_hispeed_load 90
-    write /sys/devices/system/cpu/cpu2/cpufreq/interactive/timer_rate 20000
-    write /sys/devices/system/cpu/cpu2/cpufreq/interactive/hispeed_freq 1248000
+    write /sys/devices/system/cpu/cpu2/cpufreq/interactive/above_hispeed_delay 250000
+    write /sys/devices/system/cpu/cpu2/cpufreq/interactive/boost 0
+    write /sys/devices/system/cpu/cpu2/cpufreq/interactive/go_hispeed_load 98
+    write /sys/devices/system/cpu/cpu2/cpufreq/interactive/timer_rate 50000
+    write /sys/devices/system/cpu/cpu0/cpufreq/interactive/timer_slack 20000
+    write /sys/devices/system/cpu/cpu2/cpufreq/interactive/hispeed_freq 480000
     write /sys/devices/system/cpu/cpu2/cpufreq/interactive/io_is_busy 1
-    write /sys/devices/system/cpu/cpu2/cpufreq/interactive/target_loads "85 1500000:90 1800000:70 2100000:95"
+    write /sys/devices/system/cpu/cpu2/cpufreq/interactive/target_loads "90 480000:98 633000:98 768000:98 864000:98 960000:98 1248000:98 1344000:98 1440000:98 1536000:99 1632000:99 1689000:98 1824000:99"
+#    write /sys/devices/system/cpu/cpu2/cpufreq/interactive/target_loads "250 480000:250 633000:250 768000:250 864000:250 960000:150 1248000:100 1344000:100 1440000:95 1536000:95 1632000:95 1689000:95 1824000:95"
     write /sys/devices/system/cpu/cpu2/cpufreq/interactive/min_sample_time 19000
-    write /sys/devices/system/cpu/cpu2/cpufreq/interactive/max_freq_hysteresis 79000
+    write /sys/devices/system/cpu/cpu2/cpufreq/interactive/max_freq_hysteresis 39000
     write /sys/devices/system/cpu/cpu2/cpufreq/scaling_min_freq 307200
     write /sys/devices/system/cpu/cpu2/cpufreq/interactive/ignore_hispeed_on_notif 1
+    write /sys/devices/system/cpu/cpu2/cpufreq/interactive/fast_ramp_down 1
     write /sys/devices/system/cpu/cpu2/cpufreq/interactive/enable_prediction 1
+    write /sys/devices/system/cpu/cpu2/cpufreq/interactive/powersave_bias 1
+    write /sys/devices/system/cpu/cpu2/cpufreq/interactive/screen_off_maxfreq 960000
+
+
+#    write /sys/devices/system/cpu/cpu2/cpufreq/interactive/target_loads "90 480000:90 633000:90 768000:90 864000:90 960000:95 1248000:98 1344000:99 1440000:99 1536000:99 1632000:99 1689000:99 1824000:99"
+#    write /sys/devices/system/cpu/cpu2/cpufreq/interactive/target_loads "85 800000:89 1000000:92 1500000:95 1800000:97 2100000:99"
+
 
     # Re-enable thermal and BCL hotplug
     write /sys/module/msm_thermal/core_control/enabled 1
+    write /sys/devices/soc/soc:qcom,bcl/mode "disable"
+    write /sys/devices/soc/soc:qcom,bcl/hotplug_mask 12
+    write /sys/devices/soc/soc:qcom,bcl/hotplug_soc_mask 8
+    write /sys/devices/soc/soc:qcom,bcl/mode "enable"
 
     # Input boost configuration
-    write /sys/module/cpu_boost/parameters/input_boost_freq "0:1324800 2:0"
-    write /sys/module/cpu_boost/parameters/input_boost_ms 80
+    write /sys/module/cpu_boost/parameters/input_boost_freq "0:960000 2:480000"
+    write /sys/module/cpu_boost/parameters/input_boost_ms 20
 
     # Setting b.L scheduler parameters
-    write /proc/sys/kernel/sched_boost 0
-    write /proc/sys/kernel/sched_upmigrate 95
-    write /proc/sys/kernel/sched_downmigrate 90
+    write /proc/sys/kernel/sched_boost 1
+    write /proc/sys/kernel/sched_migration_fixup 1
+    write /proc/sys/kernel/sched_upmigrate 98
+    write /proc/sys/kernel/sched_downmigrate 95
     write /proc/sys/kernel/sched_freq_inc_notify 400000
     write /proc/sys/kernel/sched_freq_dec_notify 400000
-    write /proc/sys/kernel/sched_spill_nr_run 3
-    write /proc/sys/kernel/sched_init_task_load 100
+    write /proc/sys/kernel/sched_spill_nr_run 50
+    write /proc/sys/kernel/sched_spill_load 100
+    write /proc/sys/kernel/sched_init_task_load 10
+
+    write /proc/sys/kernel/proc/sys/kernel/sched_upmigrate_min_nice 1
+
+    write /sys/devices/system/cpu/cpu0/sched_mostly_idle_nr_run 25
+    write /sys/devices/system/cpu/cpu0/sched_mostly_idle_load 95
+    write /sys/devices/system/cpu/cpu0/sched_static_cpu_pwr_cost 10
+    write /sys/devices/system/cpu/cpu0/sched_static_cluster_pwr_cost 20
+
+    write /sys/devices/system/cpu/cpu1/sched_mostly_idle_nr_run 25
+    write /sys/devices/system/cpu/cpu1/sched_mostly_idle_load 95
+    write /sys/devices/system/cpu/cpu1/sched_static_cpu_pwr_cost 10
+    write /sys/devices/system/cpu/cpu1/sched_static_cluster_pwr_cost 20
+
+    write /sys/devices/system/cpu/cpu2/sched_mostly_idle_nr_run 1
+    write /sys/devices/system/cpu/cpu2/sched_mostly_idle_load 5
+    write /sys/devices/system/cpu/cpu2/sched_static_cpu_pwr_cost 500
+    write /sys/devices/system/cpu/cpu2/sched_static_cluster_pwr_cost 1000
+
+    write /sys/devices/system/cpu/cpu3/sched_mostly_idle_nr_run 1
+    write /sys/devices/system/cpu/cpu3/sched_mostly_idle_load 5
+    write /sys/devices/system/cpu/cpu3/sched_static_cpu_pwr_cost 500
+    write /sys/devices/system/cpu/cpu3/sched_static_cluster_pwr_cost 1000
 
     # Enable bus-dcvs
     write /sys/class/devfreq/soc:qcom,cpubw/governor "bw_hwmon"
@@ -106,17 +161,29 @@ on enable-low-power
     write /sys/class/devfreq/soc:qcom,cpubw/bw_hwmon/idle_mbps 1600
 
     write /sys/class/devfreq/soc:qcom,memlat-cpu0/governor "mem_latency"
-    write /sys/class/devfreq/soc:qcom,memlat-cpu0/polling_interval 10
+    write /sys/class/devfreq/soc:qcom,memlat-cpu0/polling_interval 100
     write /sys/class/devfreq/soc:qcom,memlat-cpu2/governor "mem_latency"
-    write /sys/class/devfreq/soc:qcom,memlat-cpu2/polling_interval 10
+    write /sys/class/devfreq/soc:qcom,memlat-cpu2/polling_interval 100
     write /sys/class/devfreq/soc:qcom,mincpubw/governor "cpufreq"
 
-    # Enable UFS powersaving
-    write /sys/devices/soc/${ro.boot.bootdevice}/clkscale_enable 1
-    write /sys/devices/soc/${ro.boot.bootdevice}/clkgate_enable 1
-    write /sys/devices/soc/${ro.boot.bootdevice}/${ro.boot.bootdevice}:ufs_variant/pm_qos_enable 1
+on class_start:late_start
+    trigger enable-low-power
 
+    # Starting io prefetcher service
+    start iop
+
+on property:dev.bootcomplete=1
     setprop sys.io.scheduler "bfq"
+
+    write /sys/module/msm_thermal/core_control/enabled 0
+    write /sys/module/msm_thermal/parameters/enabled Y
+
+    # Update cpusets now that boot is complete and we want better load balancing
+    write /dev/cpuset/top-app/cpus 0-3
+    write /dev/cpuset/foreground/boost/cpus 0-3
+    write /dev/cpuset/foreground/cpus 0-3
+    write /dev/cpuset/background/cpus 0-1
+    write /dev/cpuset/system-background/cpus 0-1
 
     # VM
     write /proc/sys/vm/dirty_background_ratio 20
@@ -124,29 +191,62 @@ on enable-low-power
     write /proc/sys/vm/swappiness 5
     write /proc/sys/vm/vfs_cache_pressure 60
 
-    # Starting io prefetcher service
-    start iop
-
-    # update cpusets now that boot is complete and we want better load balancing
-    write /dev/cpuset/top-app/cpus 0-3
-    write /dev/cpuset/foreground/cpus 0-2
-    write /dev/cpuset/background/cpus 0
-    write /dev/cpuset/system-background/cpus 0-2
-
-on charger
-    write /sys/devices/system/cpu/cpu1/online 0
-    write /sys/devices/system/cpu/cpu2/online 0
-    write /sys/devices/system/cpu/cpu3/online 0
-    write /sys/module/msm_thermal/core_control/cpus_offlined 14
-    write /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor "powersave"
-    # Enable UFS powersaving
-    write /sys/devices/soc/${ro.boot.bootdevice}/clkscale_enable 1
-    write /sys/devices/soc/${ro.boot.bootdevice}/clkgate_enable 1
-    write /sys/devices/soc/${ro.boot.bootdevice}/${ro.boot.bootdevice}:ufs_variant/pm_qos_enable 1
-    write /sys/module/lpm_levels/parameters/sleep_disabled 0
-
 on property:init.svc.recovery=running
     trigger enable-low-power
 
 on property:sys.boot_completed=1
     trigger enable-low-power
+
+on property:pm.power_profile=1
+    write /sys/devices/system/cpu/cpu0/cpufreq/interactive/go_hispeed_load 50
+    write /sys/devices/system/cpu/cpu2/cpufreq/interactive/go_hispeed_load 70
+    write /sys/devices/system/cpu/cpu0/cpufreq/interactive/target_loads "50 422400:50 480000:65 556800:70 652800:70 729600:70 844800:70 960000:70 1036800:70 1113600:70 1190400:70 1228800:70 1324800:80 1401600:80 1478400:80 1593600:80"
+    write /sys/devices/system/cpu/cpu2/cpufreq/interactive/target_loads "70 403200:70 480000:70 556800:70 652800:70 729600:70 806400:70 883200:70 940800:70 1036800:80 1113600:80 1190400:80 1248000:80 1324800:80 1401600:80 1478400:80 1555200:90 1632000:90 1708800:90 1785600:90 1824000:90 1920000:90 1996800:90 2073600:90 2150400:90"
+
+#307200, 422400, 480000, 556800, 652800, 729600, 844800, 960000, 1036800, 1113600, 1190400, 1228800, 1324800, 1401600, 1478400, 1593600
+#307200, 403200, 480000, 556800, 652800, 729600, 806400, 883200, 940800, 1036800, 1113600, 1190400, 1248000, 1324800, 1401600, 1478400, 1555200, 1632000, 1708800, 1785600, 1824000, 1920000, 1996800, 2073600, 2150400
+
+    write /dev/cpuset/top-app/cpus 0-3
+    write /dev/cpuset/foreground/cpus 0-3
+    write /dev/cpuset/background/cpus 0-1
+    write /dev/cpuset/system-background/cpus 0-1
+#    write /sys/module/qhmp_core/parameters/kthreads_pm_level 0
+
+on property:pm.power_profile=0
+    write /sys/devices/system/cpu/cpu0/cpufreq/interactive/go_hispeed_load 60
+    write /sys/devices/system/cpu/cpu2/cpufreq/interactive/go_hispeed_load 90
+    write /sys/devices/system/cpu/cpu0/cpufreq/interactive/target_loads "60 422400:85 480000:80 556800:80 652800:80 729600:80 844800:80 960000:80 1036800:80 1113600:80 1190400:80 1228800:90 1324800:90 1401600:90 1478400:90 1593600:90"
+    write /sys/devices/system/cpu/cpu2/cpufreq/interactive/target_loads "90 403200:90 480000:90 556800:90 652800:90 729600:90 806400:90 883200:90 940800:90 1036800:90 1113600:90 1190400:90 1248000:90 1324800:90 1401600:90 1478400:90 1555200:90 1632000:99 1708800:99 1785600:99 1824000:99 1920000:99 1996800:99 2073600:99 2150400:99"
+
+#    write /sys/devices/system/cpu/cpu0/cpufreq/interactive/target_loads "60 460000:85 600000:80 672000:80 787000:80 864000:80 960000:80 1248000:80 1440000:80"
+#    write /sys/devices/system/cpu/cpu2/cpufreq/interactive/target_loads "90 480000:90 633000:90 768000:90 864000:90 960000:90 1248000:90 1344000:90 1440000:90 1536000:90 1632000:90 1689000:90 1824000:90"
+
+    write /dev/cpuset/top-app/cpus 0-3
+    write /dev/cpuset/foreground/cpus 0-3
+    write /dev/cpuset/background/cpus 0-1
+    write /dev/cpuset/system-background/cpus 0-1
+#    write /sys/module/qhmp_core/parameters/kthreads_pm_level 0
+
+
+#on property:pm.power_profile=0
+#    write /sys/devices/system/cpu/cpu0/cpufreq/interactive/go_hispeed_load 98
+#    write /sys/devices/system/cpu/cpu2/cpufreq/interactive/go_hispeed_load 99
+#    write /sys/devices/system/cpu/cpu0/cpufreq/interactive/target_loads "90 460000:95 600000:95 672000:95 787000:95 864000:98 960000:99 1248000:99 1440000:99"
+#    write /sys/devices/system/cpu/cpu2/cpufreq/interactive/target_loads "98 480000:98 633000:98 768000:98 864000:98 960000:99 1248000:99 1344000:99 1440000:100 1536000:100 1632000:100 1689000:100 1824000:100"
+#    write /dev/cpuset/top-app/cpus 0-3
+#    write /dev/cpuset/foreground/cpus 0-2
+#    write /dev/cpuset/background/cpus 0-1
+#    write /dev/cpuset/system-background/cpus 0-1
+#    write /sys/module/qhmp_core/parameters/kthreads_pm_level 0
+
+on property:pm.power_profile=9
+    write /sys/devices/system/cpu/cpu0/cpufreq/interactive/go_hispeed_load 100
+    write /sys/devices/system/cpu/cpu2/cpufreq/interactive/go_hispeed_load 100
+    write /sys/devices/system/cpu/cpu0/cpufreq/interactive/target_loads "90 460000:95 600000:95 672000:95 787000:95 864000:98 960000:99 1248000:99 1440000:99"
+    write /sys/devices/system/cpu/cpu2/cpufreq/interactive/target_loads "99 480000:99 633000:99 768000:99 864000:99 960000:99 1248000:100 1344000:100 1440000:100 1536000:100 1632000:100 1689000:100 1824000:100"
+    write /dev/cpuset/top-app/cpus 0-1
+    write /dev/cpuset/foreground/cpus 0-1
+    write /dev/cpuset/background/cpus 0-1
+    write /dev/cpuset/system-background/cpus 0-1
+#    write /sys/module/qhmp_core/parameters/kthreads_pm_level 3
+

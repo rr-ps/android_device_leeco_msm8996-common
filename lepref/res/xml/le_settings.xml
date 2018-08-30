@@ -1,0 +1,383 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+	Developed by andr68rus
+
+	private static final String QC_SYSTEM_PROPERTY = "persist.sys.le_fast_chrg_enable";
+	private static final String HAL3_SYSTEM_PROPERTY = "persist.camera.HAL3.enabled";
+	private static final String GPS_THROTTLE_SYSTEM_PROPERTY = "persist.ps.gpsthrottle";
+
+-->
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <PreferenceCategory
+        android:key="powersave"
+        android:title="@string/powersave_settings_title" >
+
+        <SwitchPreference
+            android:key="persist.pm.high_perf"
+            android:defaultValue="false"
+            android:title="@string/pm_high_perf_title"
+            android:summary="@string/pm_high_perf_summary" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="powersave"
+        android:title="@string/powersave_settings_title" >
+
+        <SwitchPreference
+            android:key="persist.pm.idle_disable"
+            android:defaultValue="false"
+            android:title="@string/pm_disable_idle_title"
+            android:summary="@string/pm_disable_idle_summary" />
+
+        <SwitchPreference
+            android:key="persist.pm.idle_disable_so"
+            android:defaultValue="false"
+            android:title="@string/pm_disable_idle_so_title"
+            android:summary="@string/pm_disable_idle_so_summary" />
+
+        <SwitchPreference
+            android:key="persist.pm.gms_enable_so"
+            android:defaultValue="false"
+            android:title="@string/pm_gms_enable_so_title"
+            android:summary="@string/pm_gms_enable_so_summary" />
+
+        <SwitchPreference
+            android:key="persist.ps.gps_unrestricted"
+            android:defaultValue="false"
+            android:title="@string/pm_gps_unrestricted_title"
+            android:summary="@string/pm_gps_unrestricted_summary" />
+
+
+        <SwitchPreference
+            android:key="persist.pm.deep_idle"
+            android:defaultValue="false"
+            android:title="@string/deep_idle_title"
+            android:summary="@string/deep_idle_summary" />
+
+        <!-- SwitchPreference
+            android:key="persist.pm.stop_svc"
+            android:defaultValue="false"
+            android:title="@string/stop_svc_title"
+            android:summary="@string/stop_svc_summary" / -->
+
+        <SwitchPreference
+            android:key="persist.pm.hide_gms"
+            android:defaultValue="false"
+            android:title="@string/hide_gms_title"
+            android:summary="@string/hide_gms_summary" />
+
+        <SwitchPreference
+            android:key="persist.pm.force_gms"
+            android:defaultValue="false"
+            android:title="@string/force_gms_title"
+            android:summary="@string/force_gms_summary" />
+
+        <SwitchPreference
+            android:key="persist.pm.free_net"
+            android:defaultValue="false"
+            android:title="@string/free_net_title"
+            android:summary="@string/free_net_summary" />
+
+        <SwitchPreference
+            android:key="persist.pm.frmwk_wl_block"
+            android:defaultValue="false"
+            android:title="@string/frmwk_wl_block_title"
+            android:summary="@string/frmwk_wl_block_summary" />
+
+        <SwitchPreference
+            android:key="persist.pm.krnl_wl_block"
+            android:defaultValue="false"
+            android:title="@string/krnl_wl_block_title"
+            android:summary="@string/krnl_wl_block_summary" />
+
+        <SwitchPreference
+            android:key="persist.pm.krnl_wl_qcom_rx"
+            android:defaultValue="false"
+            android:title="@string/krnl_wl_qcom_rx_title"
+            android:summary="@string/krnl_wl_qcom_rx_summary" />
+
+        <SwitchPreference
+            android:key="persist.ps.gpsthrottle"
+            android:defaultValue="false"
+            android:title="@string/gpsthrottle_title"
+            android:summary="@string/gpsthrottle_summary" />
+
+        <SwitchPreference
+            android:key="persist.ps.gpsthrottle.sys"
+            android:defaultValue="false"
+            android:title="@string/gpsthrottlesys_title"
+            android:summary="@string/gpsthrottlesys_summary" />
+
+        <!--SwitchPreference
+            android:key="persist.pm.cpuidle_ds"
+            android:defaultValue="false"
+            android:title="@string/cpuidle_ds_title"
+            android:summary="@string/cpuidle_ds_summary" / -->
+
+        <SwitchPreference
+            android:key="persist.pm.kthreads"
+            android:defaultValue="false"
+            android:title="@string/kthreads_title"
+            android:summary="@string/kthreads_summary" />
+
+        <SwitchPreference
+            android:key="persist.pm.bg_so_disable"
+            android:defaultValue="false"
+            android:title="@string/bg_so_disable_title"
+            android:summary="@string/bg_so_disable_summary" />
+
+        <SwitchPreference
+            android:key="persist.pm.bg_disable"
+            android:defaultValue="false"
+            android:title="@string/bg_disable_title"
+            android:summary="@string/bg_disable_summary" />
+
+    </PreferenceCategory>
+
+    <Preference android:title="@string/prefs_battery_saver_title" 
+		    android:summary="@string/prefs_battery_saver_summary">
+	    <intent android:action="android.settings.IGNORE_BATTERY_OPTIMIZATION_SETTINGS"/>
+    </Preference>
+
+    <Preference android:title="@string/prefs_app_options_title" 
+		    android:summary="@string/prefs_app_options_summary">
+	    <intent android:action="android.settings.APP_OPS_SETTINGS"/>
+    </Preference>
+
+
+
+    <PreferenceCategory
+        android:key="ambientdisplay"
+        android:title="@string/ambientdisplay_settings_title" >
+
+        <SwitchPreference
+            android:key="ss.sec.doze_always_on"
+            android:defaultValue="false"
+            android:title="@string/doze_always_on_title"
+            android:summary="@string/doze_always_on_summary" />
+
+        <SwitchPreference
+            android:key="ss.sec.doze_always_on_charger"
+            android:defaultValue="false"
+            android:title="@string/doze_always_on_charger_title"
+            android:summary="@string/doze_always_on_charger_summary" />
+
+        <SwitchPreference
+            android:key="ss.sys.force_ambient_for_media"
+            android:defaultValue="false"
+            android:title="@string/doze_media_title"
+            android:summary="@string/doze_media_summary" />
+
+        <SwitchPreference
+            android:key="ss.sec.doze_enabled"
+            android:defaultValue="false"
+            android:title="@string/doze_enabled_title"
+            android:summary="@string/doze_enabled_summary" />
+
+        <SwitchPreference
+            android:key="persist.doze.pulse_on_charger"
+            android:defaultValue="false"
+            android:title="@string/doze_pulse_on_charger_title"
+            android:summary="@string/doze_pulse_on_charger_summary" />
+
+        <SwitchPreference
+            android:key="persist.doze.keep_notif"
+            android:defaultValue="false"
+            android:title="@string/doze_keep_notif_title"
+            android:summary="@string/doze_keep_notif_summary" />
+
+        <SwitchPreference
+            android:key="persist.doze.pulsing_keep_awake"
+            android:defaultValue="false"
+            android:title="@string/doze_pulsing_keep_awake_title"
+            android:summary="@string/doze_pulsing_keep_awake_summary" />
+
+
+
+        <SwitchPreference
+            android:key="persist.doze.use_autobrightness"
+            android:defaultValue="false"
+            android:title="@string/doze_autobrightness_title"
+            android:summary="@string/doze_autobrightness_summary" />
+
+        <SwitchPreference
+            android:key="persist.doze.reduce_brightness"
+            android:defaultValue="false"
+            android:title="@string/doze_reduce_brightness_title"
+            android:summary="@string/doze_reduce_brightness_summary" />
+
+
+        <SwitchPreference
+            android:key="persist.doze.ovr_sup_doze"
+            android:defaultValue="false"
+            android:title="@string/doze_ovr_sup_doze_title"
+            android:summary="@string/doze_ovr_sup_doze_summary" />
+
+
+        <!-- SwitchPreference
+            android:key="persist.doze.ovr_sup_suspend"
+            android:defaultValue="false"
+            android:title="@string/doze_ovr_sup_suspend_title"
+            android:summary="@string/doze_ovr_sup_suspend_summary" / -->
+
+        <!-- SwitchPreference
+            android:key="persist.pm.reader_mode"
+            android:defaultValue="false"
+            android:title="@string/reader_mode_title"
+            android:summary="@string/reader_mode_summary" / -->
+
+
+    </PreferenceCategory>
+
+
+    <!-- PreferenceCategory
+        android:key="audio_settings"
+        android:title="@string/audio_settings_title" >
+
+        <SwitchPreference
+            android:key="persist.audio.force_effects"
+            android:defaultValue="false"
+            android:title="@string/aduio_force_effects_title"
+            android:summary="@string/aduio_force_effects_summary" />
+
+        <SwitchPreference
+            android:key="persist.audio.effects_all"
+            android:defaultValue="false"
+            android:title="@string/aduio_force_effects_all_title"
+            android:summary="@string/aduio_force_effects_all_summary" />
+
+        <!SwitchPreference
+            android:key="persist.audio.effects_global"
+            android:defaultValue="false"
+            android:title="@string/aduio_force_effects_global_title"
+            android:summary="@string/aduio_force_effects_global_summary" />
+
+    </PreferenceCategory -->
+
+    <PreferenceCategory
+        android:key="camera_pref"
+        android:title="@string/camera_pref_title" >
+
+        <SwitchPreference
+            android:key="persist.camera.HAL3.enabled"
+            android:defaultValue="false"
+            android:title="@string/hal3_title"
+            android:summary="@string/hal3_summary" />
+
+        <SwitchPreference
+            android:key="persist.camera.focus_fix"
+            android:defaultValue="false"
+            android:title="@string/camera_focus_fix_title"
+            android:summary="@string/camera_focus_fix_summary" />
+
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="batt"
+        android:title="@string/battery_settings_title" >
+
+        <SwitchPreference
+            android:key="persist.sys.le_fast_chrg_enable"
+            android:defaultValue="false"
+            android:title="@string/qc_title"
+            android:summary="@string/qc_summary" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="misc"
+        android:title="@string/misc_settings_title" >
+
+        <SwitchPreference
+            android:key="persist.sys.hall_sensor"
+            android:defaultValue="false"
+            android:title="@string/hall_sensor_title"
+            android:summary="@string/hall_sensor_summary" />
+
+        <!-- SwitchPreference
+            android:key="persist.qfp"
+            android:defaultValue="false"
+            android:title="@string/qfp_title"
+            android:summary="@string/qfp_summary" / -->
+
+        <SwitchPreference
+            android:key="persist.ims.enabled"
+            android:defaultValue="false"
+            android:title="@string/ims_enabled_title"
+            android:summary="@string/ims_enabled_summary" />
+
+        <SwitchPreference
+            android:key="persist.fx.hp_detect"
+            android:defaultValue="false"
+            android:title="@string/fx_hp_detect_title"
+            android:summary="@string/fx_hp_detect_summary" />
+
+
+        <!--SwitchPreference
+            android:key="persist.pm.proximity_off"
+            android:defaultValue="false"
+            android:title="@string/proximity_off_title"
+            android:summary="@string/proximity_off_summary" />
+
+        <SwitchPreference
+            android:key="persist.pm.proximity_on"
+            android:defaultValue="false"
+            android:title="@string/proximity_on_title"
+            android:summary="@string/proximity_on_summary" />
+
+        <SwitchPreference
+            android:key="persist.pm.proximity_boff"
+            android:defaultValue="false"
+            android:title="@string/proximity_boff_title"
+            android:summary="@string/proximity_boff_summary" />
+
+        <SwitchPreference
+            android:key="persist.pm.proximity_bon"
+            android:defaultValue="false"
+            android:title="@string/proximity_bon_title"
+            android:summary="@string/proximity_bon_summary" />
+
+        <SwitchPreference
+            android:key="persist.pm.on_after_call"
+            android:defaultValue="false"
+            android:title="@string/on_after_call_title"
+            android:summary="@string/on_after_call_summary" />
+
+        <SwitchPreference
+            android:key="persist.pm.dont_lock_incall"
+            android:defaultValue="false"
+            android:title="@string/dont_lock_incall_title"
+            android:summary="@string/dont_lock_incall_summary" /-->
+
+
+    </PreferenceCategory>
+
+
+
+
+    <!--PreferenceCategory
+        android:key="akt_profile"
+        android:title="@string/akt_profile_title" >
+
+		<ListPreference
+			android:key="akt"
+			android:title="@string/akt_title"
+			android:summary="@string/akt_summary"
+			android:defaultValue="1"
+			android:entries="@array/akt_profiles"
+			android:entryValues="@array/akt_values"
+			android:dialogTitle="@string/akt_dialogTitle" />
+
+    </PreferenceCategory -->
+
+    <Preference 
+        android:key="save_log_key" 
+        android:title="Save logs"
+        android:summary="Save logs to /sdcard/rrps">
+    </Preference>
+
+</PreferenceScreen>

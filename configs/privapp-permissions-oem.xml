@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<permissions>
+    <privapp-permissions package="com.qti.dpmserviceapp">
+        <permission name="android.permission.INTERACT_ACROSS_USERS"/>
+    </privapp-permissions>
+
+    <privapp-permissions package="com.qualcomm.location">
+        <permission name="android.permission.CONTROL_LOCATION_UPDATES"/>
+    </privapp-permissions>
+
+    <privapp-permissions package="com.qualcomm.qcrilmsgtunnel">
+        <permission name="android.permission.INTERACT_ACROSS_USERS"/>
+    </privapp-permissions>
+
+    <privapp-permissions package="com.quicinc.cne.CNEService">
+        <permission name="android.permission.INTERACT_ACROSS_USERS"/>
+        <permission name="android.permission.PACKET_KEEPALIVE_OFFLOAD"/>
+    </privapp-permissions>
+
+    <privapp-permissions package="com.google.vr.vrcore">
+        <permission name="com.google.android.providers.gsf.permission.READ_GSERVICES"/>
+        <permission name="com.google.android.providers.gsf.permission.WRITE_GSERVICES"/>
+    </privapp-permissions>
+
+    <privapp-permissions package="com.microsoft.launcher">
+        <permission name="android.permission.GET_INTENT_SENDER_INTENT"/>
+        <permission name="android.permission.WRITE_CALENDAR"/>
+        <permission name="android.permission.READ_CALENDAR"/>
+    </privapp-permissions>
+</permissions>
+
+

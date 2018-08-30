@@ -137,6 +137,13 @@ void init_target_properties()
             property_set("persist.radio.multisim.config", "dsds");
             unknownDevice = 0;
         }
+        else if (!strncmp(device.c_str(), "le_x2_whole_netcom", 18)) {
+            // This is LEX820
+            property_override_dual("ro.product.model", "ro.vendor.product.model", "LEX820");
+            // Dual SIM
+            property_set("persist.radio.multisim.config", "dsds");
+            unknownDevice = 0;
+        }
     }
     else {
         LOG(ERROR) << "Unable to read DEVINFO from " << DEVINFO_FILE;

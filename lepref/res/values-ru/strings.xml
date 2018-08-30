@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     Copyright (C) 2015 The CyanogenMod Project
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+          http://www.apache.org/licenses/LICENSE-2.0
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+
+    <string name="lepref_title">Leeco Extras</string>
+ 
+    <!-- Battery -->
+    <string name="battery_settings_title">Батарея</string>
+    <string name="qc_title">Быстрая зарядка</string>
+    <string name="qc_summary">Включение/выключение быстрой зарядки</string>
+
+    <!-- Camera -->
+    <string name="camera_pref_title">Камера</string>
+    <string name="hal3_title">Camera 2 API</string>
+    <string name="hal3_summary">Вкл/выкл режима API2</string>
+
+    <string name="camera_focus_fix_title">Фикс автофокуса</string>
+    <string name="camera_focus_fix_summary">Для устройств с проблемой автофокуса</string>
+
+    <!-- Batery whitelist -->
+    <string name="prefs_battery_saver_title">Белый список</string>
+    <string name="prefs_battery_saver_summary">Белый список</string>
+
+    <!-- App ops -->
+    <string name="prefs_app_options_title">Настройки приложений</string>
+    <string name="prefs_app_options_summary">Настройки приложений</string>
+
+    <!-- AKT Profiles -->
+    <string name="akt_profile_title">AKT профили</string>
+    <string name="akt_title">AKT профили</string>
+    <string name="akt_summary">Выбор AKT профиля</string>
+    <string name="akt_dialogTitle">Выберите нужный вам профиль</string>
+
+    <!-- Misc -->
+    <string name="misc_settings_title">Разное</string>
+    <string name="proximity_off_title">Выключать по датчику приближения</string>
+    <string name="proximity_off_summary">Выключать по датчику приближения</string>
+    <string name="proximity_on_title">Включать по датчику приближения</string>
+    <string name="proximity_on_summary">Включать по датчику приближения</string>
+    <string name="proximity_bon_title">Включать по жесту у датчика приближения</string>
+    <string name="proximity_bon_summary">Включать по жесту у датчика приближения</string>
+    <string name="proximity_boff_title">Выключать по жесту у датчика приближения</string>
+    <string name="proximity_boff_summary">Выключать по жесту у датчика приближения</string>
+    <string name="on_after_call_title">Включать после звонка</string>
+    <string name="on_after_call_summary">Включать после звонка</string>
+    <string name="lock_incall_title">Блокировать во время звонка</string>
+    <string name="lock_incall_summary">Блокировать во время звонка</string>
+
+    <!-- Powersave -->
+    <string name="powersave_settings_title">Power Save</string>
+
+    <string name="deep_idle_title">Агрессивный переход в режим сна</string>
+    <string name="deep_idle_summary">Переход в режим глубокого сна сразу по выключению экрана</string>
+
+    <string name="free_net_title">Не ограничивать сеть</string>
+    <string name="free_net_summary">Не ограничивать доступ к сети в режиме глубокого сна. Может увеличить расход батареи.</string>
+
+    <string name="frmwk_wl_block_title">Блокировщик вэйклоков Android OS</string>
+    <string name="frmwk_wl_block_summary">Заблокировать некоторые вэйклоки Android OS</string>
+
+    <string name="krnl_wl_block_title">Блокировщик вэйклоков ядра</string>
+    <string name="krnl_wl_block_summary">Заблокировать некоторые вэйклоки ядра</string>
+
+    <string name="krnl_wl_qcom_rx_title">Заблокировать QCOM RX вэйклок</string>
+    <string name="krnl_wl_qcom_rx_summary">Заблокировать QCOM RX вэйклок</string>
+
+    <string name="bg_so_disable_title">Запретить ФОН при ВЫКЛ зкране</string>
+    <string name="bg_so_disable_summary">Запретить приложениям работать в фоне при ВЫКЛ экране</string>
+
+    <string name="bg_disable_title">Запретить ФОН</string>
+    <string name="bg_disable_summary">Запретить приложениям работать в фоне</string>
+
+    <string name="pm_disable_idle_title">Отключить энергосбережение</string>
+    <string name="pm_disable_idle_summary">Полностью отключить энергосбережение для запуска несовместимого приложения</string>
+
+    <string name="pm_disable_idle_so_title">Отключить энергосбережение при ВКЛ экране</string>
+    <string name="pm_disable_idle_so_summary">Отключить энергосбережение при ВКЛ экране</string>
+
+    <string name="pm_gms_enable_so_title">Разрешить GMS при ВКЛ экране</string>
+    <string name="pm_gms_enable_so_summary">Разрешить все Google Play сервисы при ВКЛ экране</string>
+
+    <string name="pm_gps_unrestricted_title">Неограниченный доступ к GPS</string>
+    <string name="pm_gps_unrestricted_summary">Не ограничивать доступ програм к GPS в любом режиме</string>
+
+    <string name="stop_svc_title">Останавливать сервисы</string>
+    <string name="stop_svc_summary">Принудительно останавливать запрещенные сервисы при выключении экрана</string>
+
+    <string name="cpuidle_ds_title">Cpuidle: Использовать глубокий сон</string>
+    <string name="cpuidle_ds_summary">Игнорировать значение говернора и всегда использовать самый глубокий уровень сна</string>
+
+    <string name="kthreads_title">Потоки ядра на LITTLE ядрах</string>
+    <string name="kthreads_summary">Планировать потоки ядра только на LITTLE ядрах</string>
+
+    <string name="reader_mode_title">Режим чтения</string>
+    <string name="reader_mode_summary">Отладка. Могут быть сильные тормоза!</string>
+
+    <string name="hide_gms_title">Не скрывать режим сна от GMS</string>
+    <string name="hide_gms_summary">Может сломать некоторые уведомления во сне</string>
+
+    <string name="force_gms_title">Форсировать режим сна для GMS</string>
+    <string name="force_gms_summary">Может сломать некоторые сервисы GMS</string>
+
+    <string name="hall_sensor_title">Датчик Холла</string>
+    <string name="hall_sensor_summary">Разрешить работу сервиса обслуживания датчика Холла</string>
+
+    <string name="pm_high_perf_title">Высокая производительность</string>
+    <string name="pm_high_perf_summary">Высокая производительность при ВКЛ экране</string>
+
+    <!-- GPS throttle -->
+    <string name="gpsthrottle_title">GPS Throttle</string>
+    <string name="gpsthrottle_summary">Снизить частоту GPS запросов для программ в фоновом режиме</string>
+
+    <string name="gpsthrottlesys_title">System GPS Throttle</string>
+    <string name="gpsthrottlesys_summary">Снизить частоту GPS запросов от системы</string>
+
+    <string name="ims_enabled_title">Разрешить IMS сервисы</string>
+    <string name="ims_enabled_summary">Разрешить IMS сервисы</string>
+
+     <!-- Audio settings -->
+    <string name="audio_settings_title">Настройки звука</string>
+
+    <string name="aduio_force_effects_title">Форсировать DSP эффекты</string>
+    <string name="aduio_force_effects_summary">Использовать DSP эффекты для всех приложений</string>
+
+    <string name="aduio_force_effects_all_title">DSP для всех типов потоков</string>
+    <string name="aduio_force_effects_all_summary">Использовать DSP эффекты для всех типов потоков (по умолчанию только для Музыки)</string>
+
+    <string name="aduio_force_effects_global_title">Единые настройки</string>
+    <string name="aduio_force_effects_global_summary">Использовать единые настройки DSP для всех приложений</string>
+
+    <!-- Ambent display -->
+    <string name="ambientdisplay_settings_title">Заставка - Ambient Display (Doze)</string>
+
+    <string name="doze_always_on_title">Всегда вкл</string>
+    <string name="doze_always_on_summary">Заставка всегда включена (разряд батареи увеличится)</string>
+
+    <string name="doze_always_on_charger_title">Включено при зарядке</string>
+    <string name="doze_always_on_charger_summary">Заставка включена, когда устройство подключено к заряднику</string>
+
+    <string name="doze_media_title">Выводить медиа-информацию</string>
+    <string name="doze_media_summary">Выводить информацию о текущем проигрываемом треке на заставку</string>
+
+    <string name="doze_enabled_title">Включать при уведомлении</string>
+    <string name="doze_enabled_summary">Включать заставку при поступлении нового уведомления</string>
+
+    <string name="doze_pulse_on_charger_title">Включать при уведомлении на зарядке</string>
+    <string name="doze_pulse_on_charger_summary">Включать заставку при поступлении нового уведомления, когда устройство подключено к заряднику</string>
+
+    <string name="doze_keep_notif_title">Удерживать на экране</string>
+    <string name="doze_keep_notif_summary">Оставлять заставку на экране до отключения уведомления или включения экрана</string>
+
+    <string name="doze_pulsing_keep_awake_title">Не усыплять</string>
+    <string name="doze_pulsing_keep_awake_summary">Удерживать телефон от сна пока на заставке есть активное уведомление. Увеличит расход батареи.</string>
+
+    <string name="doze_autobrightness_title">Автояркость</string>
+    <string name="doze_autobrightness_summary">Использовать автояркость для заставки. Может увеличить расход батареи.</string>
+
+    <string name="doze_reduce_brightness_title">Уменьшить яркость заставки</string>
+    <string name="doze_reduce_brightness_summary">Уменьшить яркость заставки при работе от батареи</string>
+
+    <string name="doze_ovr_sup_doze_title">Использовать LP режим</string>
+    <string name="doze_ovr_sup_doze_summary">Использовать Low Power режим дисплея для заставки.\nНЕ ПОДДЕРЖИВАЕТСЯ ДИСПЛЕЕМ Sharp!!!</string>
+
+    <string name="doze_ovr_sup_suspend_title">Use ULP mode</string>
+    <string name="doze_ovr_sup_suspend_summary">Use Ultra Low Power display mode for Ambient Display.\nNot officialy suported by any display panels. Could be buggy.</string>
+
+    <string name="fx_hp_detect_title">Запретить детектирование наушников</string>
+    <string name="fx_hp_detect_summary">Запретить детектирование проводных наушников или гарнитуры</string>
+
+    <string name="qfp_title">Включить СОП</string>
+    <string name="qfp_summary">Включить сканер отпечатка пальца. Отключите если сканер поврежден или не используется.</string>
+
+</resources>
