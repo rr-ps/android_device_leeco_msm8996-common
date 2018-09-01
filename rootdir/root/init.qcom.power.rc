@@ -57,11 +57,11 @@ on init-cpus
     write /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor "interactive"
     write /sys/devices/system/cpu/cpu0/cpufreq/interactive/use_sched_load 1
     write /sys/devices/system/cpu/cpu0/cpufreq/interactive/use_migration_notif 1
-    write /sys/devices/system/cpu/cpu0/cpufreq/interactive/above_hispeed_delay "19000 480000:20000 960000:80000"
-    write /sys/devices/system/cpu/cpu0/cpufreq/interactive/go_hispeed_load 98
-    write /sys/devices/system/cpu/cpu0/cpufreq/interactive/timer_rate 50000
-    write /sys/devices/system/cpu/cpu0/cpufreq/interactive/timer_slack 20000
-    write /sys/devices/system/cpu/cpu0/cpufreq/interactive/hispeed_freq 480000
+    write /sys/devices/system/cpu/cpu0/cpufreq/interactive/above_hispeed_delay "19000 480000:20000 960000:20000"
+    write /sys/devices/system/cpu/cpu0/cpufreq/interactive/go_hispeed_load 90
+    write /sys/devices/system/cpu/cpu0/cpufreq/interactive/timer_rate 25000
+    write /sys/devices/system/cpu/cpu0/cpufreq/interactive/timer_slack -1
+    write /sys/devices/system/cpu/cpu0/cpufreq/interactive/hispeed_freq 307200
     write /sys/devices/system/cpu/cpu0/cpufreq/interactive/io_is_busy 1
     write /sys/devices/system/cpu/cpu0/cpufreq/interactive/target_loads "80 460000:95 600000:95 672000:95 787000:95 864000:98 960000:98 1248000:98 1440000:98"
     write /sys/devices/system/cpu/cpu0/cpufreq/interactive/min_sample_time 19000
@@ -77,17 +77,17 @@ on init-cpus
     write /sys/devices/system/cpu/cpu2/cpufreq/scaling_governor "interactive"
     write /sys/devices/system/cpu/cpu2/cpufreq/interactive/use_sched_load 1
     write /sys/devices/system/cpu/cpu2/cpufreq/interactive/use_migration_notif 1
-    write /sys/devices/system/cpu/cpu2/cpufreq/interactive/above_hispeed_delay 250000
+    write /sys/devices/system/cpu/cpu2/cpufreq/interactive/above_hispeed_delay 25000
     write /sys/devices/system/cpu/cpu2/cpufreq/interactive/boost 0
-    write /sys/devices/system/cpu/cpu2/cpufreq/interactive/go_hispeed_load 98
-    write /sys/devices/system/cpu/cpu2/cpufreq/interactive/timer_rate 50000
-    write /sys/devices/system/cpu/cpu0/cpufreq/interactive/timer_slack 20000
-    write /sys/devices/system/cpu/cpu2/cpufreq/interactive/hispeed_freq 480000
+    write /sys/devices/system/cpu/cpu2/cpufreq/interactive/go_hispeed_load 99
+    write /sys/devices/system/cpu/cpu2/cpufreq/interactive/timer_rate 25000
+    write /sys/devices/system/cpu/cpu2/cpufreq/interactive/timer_slack -1
+    write /sys/devices/system/cpu/cpu2/cpufreq/interactive/hispeed_freq 307200
     write /sys/devices/system/cpu/cpu2/cpufreq/interactive/io_is_busy 1
     write /sys/devices/system/cpu/cpu2/cpufreq/interactive/target_loads "90 480000:98 633000:98 768000:98 864000:98 960000:98 1248000:98 1344000:98 1440000:98 1536000:99 1632000:99 1689000:98 1824000:99"
 #    write /sys/devices/system/cpu/cpu2/cpufreq/interactive/target_loads "250 480000:250 633000:250 768000:250 864000:250 960000:150 1248000:100 1344000:100 1440000:95 1536000:95 1632000:95 1689000:95 1824000:95"
     write /sys/devices/system/cpu/cpu2/cpufreq/interactive/min_sample_time 19000
-    write /sys/devices/system/cpu/cpu2/cpufreq/interactive/max_freq_hysteresis 39000
+    write /sys/devices/system/cpu/cpu2/cpufreq/interactive/max_freq_hysteresis 19000
     write /sys/devices/system/cpu/cpu2/cpufreq/scaling_min_freq 307200
     write /sys/devices/system/cpu/cpu2/cpufreq/interactive/ignore_hispeed_on_notif 1
     write /sys/devices/system/cpu/cpu2/cpufreq/interactive/fast_ramp_down 1
@@ -161,9 +161,9 @@ on init-cpus
     write /sys/class/devfreq/soc:qcom,cpubw/bw_hwmon/idle_mbps 1600
 
     write /sys/class/devfreq/soc:qcom,memlat-cpu0/governor "mem_latency"
-    write /sys/class/devfreq/soc:qcom,memlat-cpu0/polling_interval 100
+    write /sys/class/devfreq/soc:qcom,memlat-cpu0/polling_interval 50
     write /sys/class/devfreq/soc:qcom,memlat-cpu2/governor "mem_latency"
-    write /sys/class/devfreq/soc:qcom,memlat-cpu2/polling_interval 100
+    write /sys/class/devfreq/soc:qcom,memlat-cpu2/polling_interval 50
     write /sys/class/devfreq/soc:qcom,mincpubw/governor "cpufreq"
 
 on class_start:late_start
@@ -182,14 +182,16 @@ on property:dev.bootcomplete=1
     write /dev/cpuset/top-app/cpus 0-3
     write /dev/cpuset/foreground/boost/cpus 0-3
     write /dev/cpuset/foreground/cpus 0-3
-    write /dev/cpuset/background/cpus 0-1
-    write /dev/cpuset/system-background/cpus 0-1
+    write /dev/cpuset/background/cpus 0-3
+    write /dev/cpuset/system-background/cpus 0-3
 
     # VM
     write /proc/sys/vm/dirty_background_ratio 20
     write /proc/sys/vm/dirty_expire_centisecs 100
     write /proc/sys/vm/swappiness 5
     write /proc/sys/vm/vfs_cache_pressure 60
+
+    setprop pm.power_profile 1
 
 on property:init.svc.recovery=running
     trigger enable-low-power
@@ -199,9 +201,9 @@ on property:sys.boot_completed=1
 
 on property:pm.power_profile=1
     write /sys/devices/system/cpu/cpu0/cpufreq/interactive/go_hispeed_load 50
-    write /sys/devices/system/cpu/cpu2/cpufreq/interactive/go_hispeed_load 70
+    write /sys/devices/system/cpu/cpu2/cpufreq/interactive/go_hispeed_load 90
     write /sys/devices/system/cpu/cpu0/cpufreq/interactive/target_loads "50 422400:50 480000:65 556800:70 652800:70 729600:70 844800:70 960000:70 1036800:70 1113600:70 1190400:70 1228800:70 1324800:80 1401600:80 1478400:80 1593600:80"
-    write /sys/devices/system/cpu/cpu2/cpufreq/interactive/target_loads "70 403200:70 480000:70 556800:70 652800:70 729600:70 806400:70 883200:70 940800:70 1036800:80 1113600:80 1190400:80 1248000:80 1324800:80 1401600:80 1478400:80 1555200:90 1632000:90 1708800:90 1785600:90 1824000:90 1920000:90 1996800:90 2073600:90 2150400:90"
+    write /sys/devices/system/cpu/cpu2/cpufreq/interactive/target_loads "90 403200:70 480000:70 556800:70 652800:70 729600:70 806400:70 883200:70 940800:70 1036800:80 1113600:80 1190400:80 1248000:80 1324800:80 1401600:80 1478400:80 1555200:90 1632000:90 1708800:90 1785600:90 1824000:90 1920000:90 1996800:90 2073600:90 2150400:90"
 
 #307200, 422400, 480000, 556800, 652800, 729600, 844800, 960000, 1036800, 1113600, 1190400, 1228800, 1324800, 1401600, 1478400, 1593600
 #307200, 403200, 480000, 556800, 652800, 729600, 806400, 883200, 940800, 1036800, 1113600, 1190400, 1248000, 1324800, 1401600, 1478400, 1555200, 1632000, 1708800, 1785600, 1824000, 1920000, 1996800, 2073600, 2150400
@@ -240,8 +242,8 @@ on property:pm.power_profile=0
 #    write /sys/module/qhmp_core/parameters/kthreads_pm_level 0
 
 on property:pm.power_profile=9
-    write /sys/devices/system/cpu/cpu0/cpufreq/interactive/go_hispeed_load 100
-    write /sys/devices/system/cpu/cpu2/cpufreq/interactive/go_hispeed_load 100
+    write /sys/devices/system/cpu/cpu0/cpufreq/interactive/go_hispeed_load 99
+    write /sys/devices/system/cpu/cpu2/cpufreq/interactive/go_hispeed_load 99
     write /sys/devices/system/cpu/cpu0/cpufreq/interactive/target_loads "90 460000:95 600000:95 672000:95 787000:95 864000:98 960000:99 1248000:99 1440000:99"
     write /sys/devices/system/cpu/cpu2/cpufreq/interactive/target_loads "99 480000:99 633000:99 768000:99 864000:99 960000:99 1248000:100 1344000:100 1440000:100 1536000:100 1632000:100 1689000:100 1824000:100"
     write /dev/cpuset/top-app/cpus 0-1
