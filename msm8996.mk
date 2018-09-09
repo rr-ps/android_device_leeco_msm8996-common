@@ -189,9 +189,11 @@ PRODUCT_PACKAGES += \
 
 # Fingerprint sensor
 PRODUCT_PACKAGES += \
-    android.hardware.biometrics.fingerprint@2.0-service-custom \
-    fingerprintd \
+    android.hardware.biometrics.fingerprint@2.1-service \
     fingerprint.msm8996
+
+#   fingerprintd \
+#   android.hardware.biometrics.fingerprint@2.0-service-custom \
 
 # Gatekeeper HAL
 PRODUCT_PACKAGES += \
