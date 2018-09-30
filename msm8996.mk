@@ -95,10 +95,9 @@ PRODUCT_PACKAGES += \
     tinymix
 
 PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/audio/audio_effects.conf:$(TARGET_COPY_OUT_VENDOR)/etc/audio_effects.conf \
+    $(LOCAL_PATH)/audio/audio_effects.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio_effects.xml \
     $(LOCAL_PATH)/audio/audio_tuning_mixer_tasha.txt:$(TARGET_COPY_OUT_VENDOR)/etc/audio_tuning_mixer_tasha.txt \
     $(LOCAL_PATH)/audio/audio_policy_configuration.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio_policy_configuration.xml \
-    $(LOCAL_PATH)/audio/audio_output_policy.conf:$(TARGET_COPY_OUT_VENDOR)/etc/audio_output_policy.conf \
     $(LOCAL_PATH)/audio/audio_platform_info_i2s.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio_platform_info_i2s.xml \
     $(LOCAL_PATH)/audio/listen_platform_info.xml:$(TARGET_COPY_OUT_VENDOR)/etc/listen_platform_info.xml \
     $(LOCAL_PATH)/audio/sound_trigger_mixer_paths_wcd9330.xml:$(TARGET_COPY_OUT_VENDOR)/etc/sound_trigger_mixer_paths_wcd9330.xml \
@@ -133,11 +132,12 @@ PRODUCT_PACKAGES += \
 
 # Camera
 PRODUCT_PACKAGES += \
+    android.hardware.camera.device@1.0.so \
     android.hardware.camera.provider@2.4-impl \
+    android.hardware.camera.provider@2.4-service \
     camera.device@3.2-impl \
+    camera.device@1.0-impl \
     camera.msm8996 \
-    libshims_camera \
-    libshims_qcamera-daemon \
     Snap
 
 PRODUCT_PACKAGES += \
@@ -225,7 +225,9 @@ PRODUCT_PACKAGES += \
 # HIDL
 PRODUCT_PACKAGES += \
     android.hidl.base@1.0 \
-    android.hidl.manager@1.0
+    android.hidl.base@1.0_system \
+    android.hidl.manager@1.0 \
+    android.hidl.manager@1.0_system
 
 # IMS
 PRODUCT_PACKAGES += \
@@ -281,6 +283,7 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     libc2dcolorconvert \
     libextmedia_jni \
+    libmm-omxcore \
     libOmxAacEnc \
     libOmxAmrEnc \
     libOmxCore \
@@ -288,7 +291,8 @@ PRODUCT_PACKAGES += \
     libOmxQcelp13Enc \
     libOmxVdec \
     libOmxVenc \
-    libstagefrighthw
+    libstagefrighthw \
+    android.hardware.media.omx@1.0-impl
 
 # Power
 PRODUCT_PACKAGES += \
@@ -356,6 +360,12 @@ PRODUCT_PACKAGES += \
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/thermal-engine-8996.conf:$(TARGET_COPY_OUT_VENDOR)/etc/thermal-engine-8996.conf
 
+# Thermal
+PRODUCT_PACKAGES += \
+    android.hardware.thermal@1.0-impl \
+    android.hardware.thermal@1.0-service \
+    thermal.msm8996
+
 # USB
 PRODUCT_PACKAGES += \
     android.hardware.usb@1.0-service \
@@ -398,6 +408,12 @@ PRODUCT_COPY_FILES += \
 # LePref settigs modules
 PRODUCT_PACKAGES += \
     LePref
+
+# Create a symlink for libcppf.so and liboemcrypto.so which expects the cppf firmware at
+# /system/etc/firmware to be able to move cppf firmware (via hex edit) to /vendor a link 
+# /vendor/firmware/drm is created, which points to /vendor/firmware
+BOARD_VENDOR_EXTRA_SYMLINKS += \
+    /vendor/firmware:/firmware/drm
 
 # Model is set via init library
 PRODUCT_SYSTEM_PROPERTY_BLACKLIST := \
