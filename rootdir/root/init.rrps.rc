@@ -167,3 +167,9 @@ on property:persist.fx.hp_detect=1
     write /sys/module/snd_soc_wcd_mbhc/parameters/headset_detect_enable 1
     write /sys/module/snd_soc_wcd_mbhc/parameters/headset_detect_enable 0
 
+
+on property:persist.pm.fsync=1
+    write /sys/module/sync/parameters/fsync_enabled "Y"
+
+on property:persist.pm.fsync=0
+    write /sys/module/sync/parameters/fsync_enabled "N"

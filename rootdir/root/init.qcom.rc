@@ -552,11 +552,10 @@ on property:sys.boot_completed=1
     setprop persist.hvdcp.allow_opti 1
 
 # start camera server as daemon
-service qcamerasvr /system/bin/mm-qcamera-daemon
+service qcamerasvr /vendor/bin/mm-qcamera-daemon
     class late_start
     user camera
     group camera system inet input graphics
-    seclabel u:r:mm-qcamerad:s0
     writepid /dev/cpuset/system-background/tasks
 
 # start up peripheral manager
@@ -688,11 +687,11 @@ service fossctl /system/bin/ppd foss:on
 on property:sys.boot_completed=1
     start fossctl
 
-service tlocd /system/bin/tloc_daemon
+service tlocd /vendor/bin/tloc_daemon
     class late_start
     user system
     group drmrpc gps net_raw
-   writepid /dev/cpuset/system-background/tasks
+    writepid /dev/cpuset/system-background/tasks
 
 service energy-awareness /vendor/bin/energy-awareness
     class main
@@ -715,10 +714,10 @@ service iop /vendor/bin/iop
     socket iop seqpacket 0666 root system
     writepid /dev/cpuset/system-background/tasks
 
-service ssr_setup /system/bin/ssr_setup
+service ssr_setup /vendor/bin/ssr_setup
     oneshot
     disabled
-   writepid /dev/cpuset/system-background/tasks
+    writepid /dev/cpuset/system-background/tasks
 
 
 on property:persist.sys.ssr.restart_level=*
@@ -834,7 +833,7 @@ service hci_filter_root /vendor/bin/wcnss_filter
     writepid /dev/cpuset/system-background/tasks
 
 
-service ftmd /system/bin/ftmdaemon -n
+service ftmd /vendor/bin/ftmdaemon
     class main
     user root
     group bluetooth net_bt_admin misc net_bt_stack oem_2901 net_bt
@@ -967,7 +966,7 @@ service ril-daemon2 /vendor/bin/hw/rild -c 2
 on property:persist.radio.multisim.config=dsds
     enable ril-daemon2
 
-service ssr_diag /system/bin/ssr_diag
+service ssr_diag /vendor/bin/ssr_diag
     class late_start
     user system
     group system

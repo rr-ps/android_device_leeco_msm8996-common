@@ -110,6 +110,14 @@ public class DeviceSettings extends PreferenceActivity implements OnPreferenceCh
 
     private static final String SYSTEM_PROPERTY_QFP = "persist.qfp";
 
+    private static final String SYSTEM_PROPERTY_PM_BLOCK_GMS_WL = "persist.pm.block_gms_wl";
+
+
+    private static final String SYSTEM_PROPERTY_PM_EXTREME = "persist.pm.extreme";
+    private static final String SYSTEM_PROPERTY_PM_EXTREME_SO = "persist.pm.extreme_so";
+
+    private static final String SYSTEM_PROPERTY_PM_FSYNC = "persist.pm.fsync";
+
 	private SwitchPreference mEnableQC;
 
 	private SwitchPreference mEnableHAL3;
@@ -180,6 +188,12 @@ public class DeviceSettings extends PreferenceActivity implements OnPreferenceCh
 	private SwitchPreference mHighPerf;
 
 	private SwitchPreference mHPDetect;
+	private SwitchPreference mBlockGmsWl;
+
+	private SwitchPreference mPmExtreme;
+	private SwitchPreference mPmExtremeSo;
+
+	private SwitchPreference mPmFsync;
 
     private Preference mSaveLog;
 	
@@ -477,6 +491,31 @@ public class DeviceSettings extends PreferenceActivity implements OnPreferenceCh
         }
 
 
+        mBlockGmsWl = (SwitchPreference) findPreference(SYSTEM_PROPERTY_PM_BLOCK_GMS_WL);
+        if( mBlockGmsWl != null ) {
+            mBlockGmsWl.setChecked(SystemProperties.getBoolean(SYSTEM_PROPERTY_PM_BLOCK_GMS_WL, false));
+            mBlockGmsWl.setOnPreferenceChangeListener(this);
+        }
+
+        mPmExtreme = (SwitchPreference) findPreference(SYSTEM_PROPERTY_PM_EXTREME);
+        if( mPmExtreme != null ) {
+            mPmExtreme.setChecked(SystemProperties.getBoolean(SYSTEM_PROPERTY_PM_EXTREME, false));
+            mPmExtreme.setOnPreferenceChangeListener(this);
+        }
+
+        mPmExtremeSo = (SwitchPreference) findPreference(SYSTEM_PROPERTY_PM_EXTREME_SO);
+        if( mPmExtremeSo != null ) {
+            mPmExtremeSo.setChecked(SystemProperties.getBoolean(SYSTEM_PROPERTY_PM_EXTREME_SO, false));
+            mPmExtremeSo.setOnPreferenceChangeListener(this);
+        }
+
+        mPmFsync = (SwitchPreference) findPreference(SYSTEM_PROPERTY_PM_FSYNC);
+        if( mPmFsync != null ) {
+            mPmFsync.setChecked(SystemProperties.getBoolean(SYSTEM_PROPERTY_PM_FSYNC, false));
+            mPmFsync.setOnPreferenceChangeListener(this);
+        }
+
+
         mSaveLog = findPreference("save_log_key");
         if( mSaveLog != null ) {
             mSaveLog.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
@@ -530,11 +569,11 @@ public class DeviceSettings extends PreferenceActivity implements OnPreferenceCh
         if( key.startsWith("ss.") ) {
             setSystemSetting(key.substring(3),value);
         } else {
-	        if(value) {
-		        SystemProperties.set(key, "1");
-    	    } else {
-    		    SystemProperties.set(key, "0");
-    	    }
+            String value_str = value ? "1":"0";
+            if( key.equals("persist.qfp") ) {
+                value_str = value ? "true":"false";
+            }
+    	    SystemProperties.set(key, value_str);
         }
     	Log.d(TAG, key + " setting changed");
     }

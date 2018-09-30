@@ -182,5 +182,20 @@
 
     <string name="qfp_title">Enabled Fingerprint</string>
     <string name="qfp_summary">Enable Fingerprint Sensor. Disable to save some battery or if it is broken</string>
+
+    <string name="block_gms_wl_title">Block GMS wakelocks</string>
+    <string name="block_gms_wl_summary">Block GMS wakelocks</string>
+
+
+    <string name="pm_extreme_title">Extreme Task Killer</string>
+    <string name="pm_extreme_summary">Kill disabled tasks 1 minute after screen off</string>
+
+    <string name="pm_extreme_so_title">Screen On Extreme Task Killer</string>
+    <string name="pm_extreme_so_summary">Kill tasks after 1 minute of inactivity while screen on</string>
 	
+
+    <string name="performance_settings_title">Performance</string>
+
+    <string name="pm_fsync_title">Enable FSYNC</string>
+    <string name="pm_fsync_summary">Disabling FSYNC could be dangerous for data safety in case of kernel crash, but will increase performance.</string>
 </resources>

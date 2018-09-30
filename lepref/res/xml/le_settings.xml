@@ -11,14 +11,20 @@
 
 
     <PreferenceCategory
-        android:key="powersave"
-        android:title="@string/powersave_settings_title" >
+        android:key="Performance"
+        android:title="@string/performance_settings_title" >
 
         <SwitchPreference
             android:key="persist.pm.high_perf"
             android:defaultValue="false"
             android:title="@string/pm_high_perf_title"
             android:summary="@string/pm_high_perf_summary" />
+
+        <SwitchPreference
+            android:key="persist.pm.fsync"
+            android:defaultValue="false"
+            android:title="@string/pm_fsync_title"
+            android:summary="@string/pm_fsync_summary" />
 
     </PreferenceCategory>
 
@@ -88,6 +94,13 @@
             android:summary="@string/frmwk_wl_block_summary" />
 
         <SwitchPreference
+            android:key="persist.pm.block_gms_wl"
+            android:defaultValue="false"
+            android:title="@string/block_gms_wl_title"
+            android:summary="@string/block_gms_wl_summary" />
+
+
+        <SwitchPreference
             android:key="persist.pm.krnl_wl_block"
             android:defaultValue="false"
             android:title="@string/krnl_wl_block_title"
@@ -111,11 +124,11 @@
             android:title="@string/gpsthrottlesys_title"
             android:summary="@string/gpsthrottlesys_summary" />
 
-        <!--SwitchPreference
+        <SwitchPreference
             android:key="persist.pm.cpuidle_ds"
             android:defaultValue="false"
             android:title="@string/cpuidle_ds_title"
-            android:summary="@string/cpuidle_ds_summary" / -->
+            android:summary="@string/cpuidle_ds_summary" />
 
         <SwitchPreference
             android:key="persist.pm.kthreads"
@@ -134,6 +147,18 @@
             android:defaultValue="false"
             android:title="@string/bg_disable_title"
             android:summary="@string/bg_disable_summary" />
+
+        <SwitchPreference
+            android:key="persist.pm.extreme"
+            android:defaultValue="false"
+            android:title="@string/pm_extreme_title"
+            android:summary="@string/pm_extreme_summary" />
+
+        <SwitchPreference
+            android:key="persist.pm.extreme_so"
+            android:defaultValue="false"
+            android:title="@string/pm_extreme_so_title"
+            android:summary="@string/pm_extreme_so_summary" />
 
     </PreferenceCategory>
 
@@ -298,11 +323,11 @@
             android:title="@string/hall_sensor_title"
             android:summary="@string/hall_sensor_summary" />
 
-        <!-- SwitchPreference
+        <SwitchPreference
             android:key="persist.qfp"
             android:defaultValue="false"
             android:title="@string/qfp_title"
-            android:summary="@string/qfp_summary" / -->
+            android:summary="@string/qfp_summary" />
 
         <SwitchPreference
             android:key="persist.ims.enabled"

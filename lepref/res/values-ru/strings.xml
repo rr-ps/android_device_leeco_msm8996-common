@@ -72,8 +72,8 @@
     <string name="krnl_wl_block_title">Блокировщик вэйклоков ядра</string>
     <string name="krnl_wl_block_summary">Заблокировать некоторые вэйклоки ядра</string>
 
-    <string name="krnl_wl_qcom_rx_title">Заблокировать QCOM RX вэйклок</string>
-    <string name="krnl_wl_qcom_rx_summary">Заблокировать QCOM RX вэйклок</string>
+    <string name="krnl_wl_qcom_rx_title">Блокировать QCOM RX вэйклок</string>
+    <string name="krnl_wl_qcom_rx_summary">Блокировать QCOM RX вэйклок</string>
 
     <string name="bg_so_disable_title">Запретить ФОН при ВЫКЛ зкране</string>
     <string name="bg_so_disable_summary">Запретить приложениям работать в фоне при ВЫКЛ экране</string>
@@ -180,5 +180,19 @@
 
     <string name="qfp_title">Включить СОП</string>
     <string name="qfp_summary">Включить сканер отпечатка пальца. Отключите если сканер поврежден или не используется.</string>
+
+    <string name="block_gms_wl_title">Блокировать GMS вэйклоки</string>
+    <string name="block_gms_wl_summary">Блокировать GMS вэйклоки</string>
+
+    <string name="pm_extreme_title">Extreme Task Killer</string>
+    <string name="pm_extreme_summary">Останавливать заблокированные приложения через 1 минут после отключения экрана</string>
+
+    <string name="pm_extreme_so_title">Screen On Extreme Task Killer</string>
+    <string name="pm_extreme_so_summary">Останавливать заблокированные приложения через 1 минуту неактивности при включенном экране</string>
+
+    <string name="performance_settings_title">Производительность</string>
+
+    <string name="pm_fsync_title">Включить FSYNC</string>
+    <string name="pm_fsync_summary">Отключение FSYNC опасно для сохранности данных в случае внезапной перезагрузки, но увеличивает производительность.</string>
 
 </resources>
