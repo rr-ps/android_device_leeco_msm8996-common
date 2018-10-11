@@ -114,8 +114,8 @@ on init-cpus
     # Setting b.L scheduler parameters
     write /proc/sys/kernel/sched_boost 1
     write /proc/sys/kernel/sched_migration_fixup 1
-    write /proc/sys/kernel/sched_upmigrate 98
-    write /proc/sys/kernel/sched_downmigrate 95
+    write /proc/sys/kernel/sched_upmigrate 100
+    write /proc/sys/kernel/sched_downmigrate 98
     write /proc/sys/kernel/sched_freq_inc_notify 400000
     write /proc/sys/kernel/sched_freq_dec_notify 400000
     write /proc/sys/kernel/sched_spill_nr_run 50
@@ -200,6 +200,7 @@ on property:sys.boot_completed=1
     trigger enable-low-power
 
 on property:pm.power_profile=1
+
     write /sys/devices/system/cpu/cpu0/cpufreq/interactive/go_hispeed_load 50
     write /sys/devices/system/cpu/cpu2/cpufreq/interactive/go_hispeed_load 90
     write /sys/devices/system/cpu/cpu0/cpufreq/interactive/target_loads "50 422400:50 480000:65 556800:70 652800:70 729600:70 844800:70 960000:70 1036800:70 1113600:70 1190400:70 1228800:70 1324800:80 1401600:80 1478400:80 1593600:80"
@@ -215,6 +216,7 @@ on property:pm.power_profile=1
 #    write /sys/module/qhmp_core/parameters/kthreads_pm_level 0
 
 on property:pm.power_profile=0
+
     write /sys/devices/system/cpu/cpu0/cpufreq/interactive/go_hispeed_load 60
     write /sys/devices/system/cpu/cpu2/cpufreq/interactive/go_hispeed_load 90
     write /sys/devices/system/cpu/cpu0/cpufreq/interactive/target_loads "60 422400:85 480000:80 556800:80 652800:80 729600:80 844800:80 960000:80 1036800:80 1113600:80 1190400:80 1228800:90 1324800:90 1401600:90 1478400:90 1593600:90"
@@ -224,7 +226,7 @@ on property:pm.power_profile=0
 #    write /sys/devices/system/cpu/cpu2/cpufreq/interactive/target_loads "90 480000:90 633000:90 768000:90 864000:90 960000:90 1248000:90 1344000:90 1440000:90 1536000:90 1632000:90 1689000:90 1824000:90"
 
     write /dev/cpuset/top-app/cpus 0-3
-    write /dev/cpuset/foreground/cpus 0-3
+    write /dev/cpuset/foreground/cpus 0-2
     write /dev/cpuset/background/cpus 0-1
     write /dev/cpuset/system-background/cpus 0-1
 #    write /sys/module/qhmp_core/parameters/kthreads_pm_level 0
@@ -242,13 +244,24 @@ on property:pm.power_profile=0
 #    write /sys/module/qhmp_core/parameters/kthreads_pm_level 0
 
 on property:pm.power_profile=9
-    write /sys/devices/system/cpu/cpu0/cpufreq/interactive/go_hispeed_load 99
-    write /sys/devices/system/cpu/cpu2/cpufreq/interactive/go_hispeed_load 99
-    write /sys/devices/system/cpu/cpu0/cpufreq/interactive/target_loads "90 460000:95 600000:95 672000:95 787000:95 864000:98 960000:99 1248000:99 1440000:99"
+
+    write /sys/devices/system/cpu/cpu0/cpufreq/interactive/go_hispeed_load 95
+    write /sys/devices/system/cpu/cpu2/cpufreq/interactive/go_hispeed_load 100
+    write /sys/devices/system/cpu/cpu0/cpufreq/interactive/target_loads "90 460000:95 600000:95 672000:95 787000:95 864000:98 960000:100 1248000:100 1440000:100"
     write /sys/devices/system/cpu/cpu2/cpufreq/interactive/target_loads "99 480000:99 633000:99 768000:99 864000:99 960000:99 1248000:100 1344000:100 1440000:100 1536000:100 1632000:100 1689000:100 1824000:100"
     write /dev/cpuset/top-app/cpus 0-1
     write /dev/cpuset/foreground/cpus 0-1
     write /dev/cpuset/background/cpus 0-1
     write /dev/cpuset/system-background/cpus 0-1
+
 #    write /sys/module/qhmp_core/parameters/kthreads_pm_level 3
 
+on property:pm.power_profile=7
+    write /sys/devices/system/cpu/cpu0/cpufreq/interactive/go_hispeed_load 99
+    write /sys/devices/system/cpu/cpu2/cpufreq/interactive/go_hispeed_load 100
+    write /sys/devices/system/cpu/cpu0/cpufreq/interactive/target_loads "90 460000:95 600000:95 672000:95 787000:95 864000:98 960000:99 1248000:99 1440000:99"
+    write /sys/devices/system/cpu/cpu2/cpufreq/interactive/target_loads "99 480000:99 633000:99 768000:99 864000:100 960000:100 1248000:100 1344000:100 1440000:100 1536000:100 1632000:100 1689000:100 1824000:100"
+    write /dev/cpuset/top-app/cpus 0-1
+    write /dev/cpuset/foreground/cpus 0-1
+    write /dev/cpuset/background/cpus 0-1
+    write /dev/cpuset/system-background/cpus 0-1
