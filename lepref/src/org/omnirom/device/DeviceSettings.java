@@ -118,6 +118,10 @@ public class DeviceSettings extends PreferenceActivity implements OnPreferenceCh
 
     private static final String SYSTEM_PROPERTY_PM_FSYNC = "persist.pm.fsync";
 
+    private static final String SYSTEM_PROPERTY_PM_IDLE_2G = "persist.pm.idle_2g";
+
+    private static final String SYSTEM_PROPERTY_CAMERA_LOW_POWER = "camera.lowpower.record.enable";
+
 	private SwitchPreference mEnableQC;
 
 	private SwitchPreference mEnableHAL3;
@@ -194,6 +198,8 @@ public class DeviceSettings extends PreferenceActivity implements OnPreferenceCh
 	private SwitchPreference mPmExtremeSo;
 
 	private SwitchPreference mPmFsync;
+
+	private SwitchPreference mPmIdle2g;
 
     private Preference mSaveLog;
 	
@@ -513,6 +519,12 @@ public class DeviceSettings extends PreferenceActivity implements OnPreferenceCh
         if( mPmFsync != null ) {
             mPmFsync.setChecked(SystemProperties.getBoolean(SYSTEM_PROPERTY_PM_FSYNC, false));
             mPmFsync.setOnPreferenceChangeListener(this);
+        }
+
+        mPmIdle2g = (SwitchPreference) findPreference(SYSTEM_PROPERTY_PM_IDLE_2G);
+        if( mPmIdle2g != null ) {
+            mPmIdle2g.setChecked(SystemProperties.getBoolean(SYSTEM_PROPERTY_PM_IDLE_2G, false));
+            mPmIdle2g.setOnPreferenceChangeListener(this);
         }
 
 

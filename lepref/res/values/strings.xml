@@ -198,4 +198,7 @@
 
     <string name="pm_fsync_title">Enable FSYNC</string>
     <string name="pm_fsync_summary">Disabling FSYNC could be dangerous for data safety in case of kernel crash, but will increase performance.</string>
+
+    <string name="idle_2g_title">Switch 2G on Idle</string>
+    <string name="idle_2g_summary">Switch to 2G mode on Idle</string>
 </resources>

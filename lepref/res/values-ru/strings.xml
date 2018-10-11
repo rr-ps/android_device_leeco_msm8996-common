@@ -195,4 +195,7 @@
     <string name="pm_fsync_title">Включить FSYNC</string>
     <string name="pm_fsync_summary">Отключение FSYNC опасно для сохранности данных в случае внезапной перезагрузки, но увеличивает производительность.</string>
 
+    <string name="idle_2g_title">Включать 2G во сне</string>
+    <string name="idle_2g_summary">Включать 2G во сне</string>
+
 </resources>
