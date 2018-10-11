@@ -120,7 +120,7 @@ void init_target_properties()
             // This is LEX829
             property_override_dual("ro.product.device", "ro.vendor.product.device", "le_x2");
             property_override_dual("ro.product.model", "ro.vendor.product.model", "LEX829");
-            property_override_dual("ro.product.name", "ro.vendor.product.name", "LeMax2_WW");
+            property_override_dual("ro.product.name", "ro.vendor.product.name", "LeMax2_NA");
             // Dual SIM
             property_set("persist.radio.multisim.config", "dsds");
             property_set("ro.telephony.default_network", "10,10");
@@ -136,7 +136,7 @@ void init_target_properties()
             property_set("ro.telephony.default_network", "10,10");
             unknownDevice = 0;
         }
-        else if (!strncmp(device.c_str(), "le_x2", 5)) {
+        else if (!strncmp(device.c_str(), "le_x2_whole_netcom", 18)) {
             // This is LEX820
             property_override_dual("ro.product.device", "ro.vendor.product.device", "le_x2");
             property_override_dual("ro.product.model", "ro.vendor.product.model", "LEX820");
@@ -146,7 +146,7 @@ void init_target_properties()
             property_set("ro.telephony.default_network", "10,10");
             unknownDevice = 0;
         }
-        else if (!strncmp(device.c_str(), "le_x2_whole_netcom", 18)) {
+        else if (!strncmp(device.c_str(), "le_x2", 5)) {
             // This is LEX820
             property_override_dual("ro.product.device", "ro.vendor.product.device", "le_x2");
             property_override_dual("ro.product.model", "ro.vendor.product.model", "LEX820");
