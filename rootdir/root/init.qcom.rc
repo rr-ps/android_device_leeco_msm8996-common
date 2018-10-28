@@ -557,6 +557,7 @@ service qcamerasvr /vendor/bin/mm-qcamera-daemon
     user camera
     group camera system inet input graphics
     writepid /dev/cpuset/system-background/tasks
+    writepid /dev/cpuctl/bg_non_interactive/tasks
 
 # start up peripheral manager
 service per_mgr /vendor/bin/pm-service
@@ -564,6 +565,7 @@ service per_mgr /vendor/bin/pm-service
     user system
     group system net_raw
     writepid /dev/cpuset/system-background/tasks
+    writepid /dev/cpuctl/bg_non_interactive/tasks
 
 service per_proxy /vendor/bin/pm-proxy
     class late_start
@@ -571,6 +573,7 @@ service per_proxy /vendor/bin/pm-proxy
     group system
     disabled
     writepid /dev/cpuset/system-background/tasks
+    writepid /dev/cpuctl/bg_non_interactive/tasks
 
 on property:init.svc.per_mgr=running
     start per_proxy
@@ -583,6 +586,7 @@ service qseecomd /vendor/bin/qseecomd
    user root
    group root
    writepid /dev/cpuset/system-background/tasks
+   writepid /dev/cpuctl/bg_non_interactive/tasks
 
 service perfd /vendor/bin/perfd
    class main
@@ -591,6 +595,7 @@ service perfd /vendor/bin/perfd
    disabled
    socket perfd seqpacket 0666 root system
    writepid /dev/cpuset/system-background/tasks
+   writepid /dev/cpuctl/bg_non_interactive/tasks
 
 service thermal-engine /vendor/bin/thermal-engine -c ${sys.qcom.thermalcfg:-/vendor/etc/thermal-engine-8996.conf}
    class main
@@ -601,17 +606,20 @@ service thermal-engine /vendor/bin/thermal-engine -c ${sys.qcom.thermalcfg:-/ven
    socket thermal-send-rule stream 0660 system system
    group root
    writepid /dev/cpuset/system-background/tasks
+   writepid /dev/cpuctl/bg_non_interactive/tasks
 
 service time_daemon /vendor/bin/time_daemon
    class late_start
    user root
    group root
    writepid /dev/cpuset/system-background/tasks
+   writepid /dev/cpuctl/bg_non_interactive/tasks
 
 service adsprpcd /vendor/bin/adsprpcd
    class main
    user media
    group media
+   writepid /dev/cpuctl/bg_non_interactive/tasks
    writepid /dev/cpuset/system-background/tasks
 
 service imsqmidaemon /vendor/bin/imsqmidaemon
@@ -620,6 +628,7 @@ service imsqmidaemon /vendor/bin/imsqmidaemon
     socket ims_qmid stream 0660 system radio
     group radio log diag
     writepid /dev/cpuset/system-background/tasks
+    writepid /dev/cpuctl/bg_non_interactive/tasks
     disabled
 
 service imsdatadaemon /vendor/bin/imsdatadaemon
@@ -627,6 +636,7 @@ service imsdatadaemon /vendor/bin/imsdatadaemon
     user system
     socket ims_datad stream 0660 system radio
     group system wifi radio inet log diag
+    writepid /dev/cpuctl/bg_non_interactive/tasks
     writepid /dev/cpuset/system-background/tasks
     disabled
 
@@ -637,6 +647,7 @@ service ims_rtp_daemon /vendor/bin/ims_rtp_daemon
    class main
    user system
    group radio diag inet log
+   writepid /dev/cpuctl/bg_non_interactive/tasks
    writepid /dev/cpuset/system-background/tasks
    disabled
 
@@ -644,6 +655,7 @@ service imsrcsservice /vendor/bin/imsrcsd
    class main
    user system
    group radio diag inet log
+   writepid /dev/cpuctl/bg_non_interactive/tasks
    writepid /dev/cpuset/system-background/tasks
    disabled
 
@@ -656,7 +668,8 @@ service ppd /vendor/bin/mm-pp-dpps
     user system
     group system graphics
     socket pps stream 0660 system system
-   writepid /dev/cpuset/system-background/tasks
+    writepid /dev/cpuset/system-background/tasks
+    writepid /dev/cpuctl/bg_non_interactive/tasks
     disabled
 
 on property:init.svc.surfaceflinger=stopped
@@ -682,7 +695,8 @@ service fossctl /system/bin/ppd foss:on
     group system graphics
     oneshot
     disabled
-   writepid /dev/cpuset/system-background/tasks
+    writepid /dev/cpuctl/bg_non_interactive/tasks
+    writepid /dev/cpuset/system-background/tasks
 
 on property:sys.boot_completed=1
     start fossctl
@@ -691,6 +705,7 @@ service tlocd /vendor/bin/tloc_daemon
     class late_start
     user system
     group drmrpc gps net_raw
+    writepid /dev/cpuctl/bg_non_interactive/tasks
     writepid /dev/cpuset/system-background/tasks
 
 service energy-awareness /vendor/bin/energy-awareness
@@ -698,13 +713,15 @@ service energy-awareness /vendor/bin/energy-awareness
     user root
     group system
     oneshot
-   writepid /dev/cpuset/system-background/tasks
+    writepid /dev/cpuctl/bg_non_interactive/tasks
+    writepid /dev/cpuset/system-background/tasks
 
 service mdtpd /vendor/bin/mdtpd
     class late_start
     user root
     group system radio drmrpc
-   writepid /dev/cpuset/system-background/tasks
+    writepid /dev/cpuctl/bg_non_interactive/tasks
+    writepid /dev/cpuset/system-background/tasks
 
 service iop /vendor/bin/iop
     class main
@@ -712,11 +729,13 @@ service iop /vendor/bin/iop
     group root
     disabled
     socket iop seqpacket 0666 root system
+    writepid /dev/cpuctl/bg_non_interactive/tasks
     writepid /dev/cpuset/system-background/tasks
 
 service ssr_setup /vendor/bin/ssr_setup
     oneshot
     disabled
+    writepid /dev/cpuctl/bg_non_interactive/tasks
     writepid /dev/cpuset/system-background/tasks
 
 
@@ -776,12 +795,14 @@ service cnd /vendor/bin/cnd
     class main
     socket cnd stream 660 root inet
     group root wakelock
+    writepid /dev/cpuctl/bg_non_interactive/tasks
     writepid /dev/cpuset/system-background/tasks
 
 service dpmQmiMgr /vendor/bin/dpmQmiMgr
     class main
     user system
     group system
+    writepid /dev/cpuctl/bg_non_interactive/tasks
     writepid /dev/cpuset/system-background/tasks
 
 
@@ -789,6 +810,7 @@ service irsc_util /vendor/bin/irsc_util "/vendor/etc/sec_config"
     class core
     user root
     oneshot
+    writepid /dev/cpuctl/bg_non_interactive/tasks
     writepid /dev/cpuset/system-background/tasks
 
 
@@ -796,11 +818,13 @@ service rmt_storage /vendor/bin/rmt_storage
     class core
     user root
     group root system wakelock
+    writepid /dev/cpuctl/bg_non_interactive/tasks
     writepid /dev/cpuset/system-background/tasks
 
 service tftp_server /vendor/bin/tftp_server
     class main
     user root
+    writepid /dev/cpuctl/bg_non_interactive/tasks
     writepid /dev/cpuset/system-background/tasks
 
 on property:wc_transport.start_hci=true
@@ -815,6 +839,7 @@ service start_hci_filter /vendor/bin/wcnss_filter
     group bluetooth diag system wakelock
     seclabel u:r:wcnss_filter:s0
     disabled
+    writepid /dev/cpuctl/bg_non_interactive/tasks
     writepid /dev/cpuset/system-background/tasks
 
 
@@ -830,6 +855,7 @@ service hci_filter_root /vendor/bin/wcnss_filter
     group bluetooth oem_2901 system
     seclabel u:r:wcnss_filter:s0
     disabled
+    writepid /dev/cpuctl/bg_non_interactive/tasks
     writepid /dev/cpuset/system-background/tasks
 
 
@@ -839,6 +865,7 @@ service ftmd /vendor/bin/ftmdaemon
     group bluetooth net_bt_admin misc net_bt_stack oem_2901 net_bt
     disabled
     oneshot
+    writepid /dev/cpuctl/bg_non_interactive/tasks
     writepid /dev/cpuset/system-background/tasks
 
 service netmgrd /vendor/bin/netmgrd
@@ -846,6 +873,7 @@ service netmgrd /vendor/bin/netmgrd
     user root
     group root wifi wakelock radio inet
     disabled
+    writepid /dev/cpuctl/bg_non_interactive/tasks
     writepid /dev/cpuset/system-background/tasks
 
 service ipacm-diag /vendor/bin/ipacm-diag
@@ -854,6 +882,7 @@ service ipacm-diag /vendor/bin/ipacm-diag
     socket ipacm_log_file dgram 660 radio radio
     group radio diag oem_2901
     disabled
+    writepid /dev/cpuctl/bg_non_interactive/tasks
     writepid /dev/cpuset/system-background/tasks
 
 service ipacm /vendor/bin/ipacm
@@ -861,6 +890,7 @@ service ipacm /vendor/bin/ipacm
     user radio
     group radio inet
     disabled
+    writepid /dev/cpuctl/bg_non_interactive/tasks
     writepid /dev/cpuset/system-background/tasks
 
 service qti /vendor/bin/qti
@@ -868,6 +898,7 @@ service qti /vendor/bin/qti
     user radio
     group radio oem_2901 diag usb net_admin
     disabled
+    writepid /dev/cpuctl/bg_non_interactive/tasks
     writepid /dev/cpuset/system-background/tasks
 
 service sensors /vendor/bin/sensors.qcom
@@ -877,6 +908,7 @@ service sensors /vendor/bin/sensors.qcom
     # Grants the ability for this daemon to bind IPC router ports so it can
     # register QMI services
     capabilities NET_BIND_SERVICE
+    writepid /dev/cpuctl/bg_non_interactive/tasks
     writepid /dev/cpuset/system-background/tasks
 
 on property:ro.use_data_netmgrd=false
@@ -906,6 +938,7 @@ service wpa_supplicant /vendor/bin/hw/wpa_supplicant \
     socket wpa_wlan0 dgram 660 wifi wifi
     disabled
     oneshot
+    writepid /dev/cpuctl/bg_non_interactive/tasks
     writepid /dev/cpuset/system-background/tasks
 
 service cnss_diag /vendor/bin/cnss_diag -q -f
@@ -915,12 +948,14 @@ service cnss_diag /vendor/bin/cnss_diag -q -f
     oneshot
     # cnss diag cause power consumption bigger sometimes, so disable it until solve it
     disabled
+    writepid /dev/cpuctl/bg_non_interactive/tasks
     writepid /dev/cpuset/system-background/tasks
 
 service cnss-daemon /vendor/bin/cnss-daemon -n -l
     class late_start
     user system
     group system inet net_admin wifi
+    writepid /dev/cpuctl/bg_non_interactive/tasks
     writepid /dev/cpuset/system-background/tasks
 
 on property:sys.shutdown.requested=*
@@ -930,6 +965,7 @@ service loc_launcher /vendor/bin/loc_launcher
     # loc_launcher will start as root and set its uid to gps
     class late_start
     group gps inet diag wifi
+    writepid /dev/cpuctl/bg_non_interactive/tasks
     writepid /dev/cpuset/system-background/tasks
 
 on property:crypto.driver.load=1
@@ -940,6 +976,7 @@ service atfwd /vendor/bin/ATFWD-daemon
     class late_start
     user system
     group system radio
+    writepid /dev/cpuctl/bg_non_interactive/tasks
     writepid /dev/cpuset/system-background/tasks
 
 on property:ro.data.large_tcp_window_size=true
@@ -953,6 +990,8 @@ service ril-daemon /vendor/bin/hw/rild
     user radio
     group radio cache inet misc audio log readproc wakelock oem_2901 net_raw
     capabilities BLOCK_SUSPEND NET_ADMIN NET_RAW
+#    writepid /dev/cpuctl/bg_non_interactive/tasks
+#    writepid /dev/cpuset/system-background/tasks
 
 service ril-daemon2 /vendor/bin/hw/rild -c 2
     class main
@@ -961,28 +1000,33 @@ service ril-daemon2 /vendor/bin/hw/rild -c 2
     user radio
     group radio cache inet misc audio log readproc wakelock oem_2901 net_raw
     capabilities BLOCK_SUSPEND NET_ADMIN NET_RAW
-    disabled
+#    disabled
+#    writepid /dev/cpuctl/bg_non_interactive/tasks
+#    writepid /dev/cpuset/system-background/tasks
 
-on property:persist.radio.multisim.config=dsds
-    enable ril-daemon2
+#on property:persist.radio.multisim.config=dsds
+#    enable ril-daemon2
 
 service ssr_diag /vendor/bin/ssr_diag
     class late_start
     user system
     group system
     disabled
+    writepid /dev/cpuctl/bg_non_interactive/tasks
     writepid /dev/cpuset/system-background/tasks
 
 service charger_monitor /system/bin/charger_monitor
     user root
     group root
     disabled
+    writepid /dev/cpuctl/bg_non_interactive/tasks
     writepid /dev/cpuset/system-background/tasks
 
 service qseeproxydaemon /vendor/bin/qseeproxydaemon
     class late_start
     user system
     group system
+    writepid /dev/cpuctl/bg_non_interactive/tasks
     writepid /dev/cpuset/system-background/tasks
 
 service qcom-sh /system/bin/sh /init.qcom.sh
@@ -996,12 +1040,14 @@ service hvdcp_opti /vendor/bin/hvdcp_opti
     user root
     group root
     seclabel u:r:hvdcp:s0
+    writepid /dev/cpuctl/bg_non_interactive/tasks
     writepid /dev/cpuset/system-background/tasks
 
-service charger /charger
+service charger /vendor/bin/charger
     class charger
     group system graphics log
     seclabel u:r:charger:s0
+    writepid /dev/cpuctl/bg_non_interactive/tasks
     writepid /dev/cpuset/system-background/tasks
 
 on charger

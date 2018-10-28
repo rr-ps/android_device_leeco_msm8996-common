@@ -198,4 +198,7 @@
     <string name="idle_2g_title">Включать 2G во сне</string>
     <string name="idle_2g_summary">Включать 2G во сне</string>
 
+    <string name="whatsapp_hack_title">Громкость WhatsApp Сообщений</string>
+    <string name="whatsapp_hack_summary">Использовать микрофон громкой связи для записи сообщений WhatsApp</string>
+
 </resources>

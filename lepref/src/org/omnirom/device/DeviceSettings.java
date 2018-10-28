@@ -122,6 +122,8 @@ public class DeviceSettings extends PreferenceActivity implements OnPreferenceCh
 
     private static final String SYSTEM_PROPERTY_CAMERA_LOW_POWER = "camera.lowpower.record.enable";
 
+    private static final String SYSTEM_PROPERTY_WHATSAPP_HACK = "persist.vendor.audio.whatsapp";
+
 	private SwitchPreference mEnableQC;
 
 	private SwitchPreference mEnableHAL3;
@@ -200,6 +202,8 @@ public class DeviceSettings extends PreferenceActivity implements OnPreferenceCh
 	private SwitchPreference mPmFsync;
 
 	private SwitchPreference mPmIdle2g;
+
+	private SwitchPreference mWhatsappHack;
 
     private Preference mSaveLog;
 	
@@ -526,6 +530,14 @@ public class DeviceSettings extends PreferenceActivity implements OnPreferenceCh
             mPmIdle2g.setChecked(SystemProperties.getBoolean(SYSTEM_PROPERTY_PM_IDLE_2G, false));
             mPmIdle2g.setOnPreferenceChangeListener(this);
         }
+
+        mWhatsappHack = (SwitchPreference) findPreference(SYSTEM_PROPERTY_WHATSAPP_HACK);
+        if( mWhatsappHack != null ) {
+            mWhatsappHack.setChecked(SystemProperties.getBoolean(SYSTEM_PROPERTY_WHATSAPP_HACK, false));
+            mWhatsappHack.setOnPreferenceChangeListener(this);
+        }
+
+
 
 
         mSaveLog = findPreference("save_log_key");

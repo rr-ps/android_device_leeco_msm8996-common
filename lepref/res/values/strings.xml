@@ -201,4 +201,8 @@
 
     <string name="idle_2g_title">Switch 2G on Idle</string>
     <string name="idle_2g_summary">Switch to 2G mode on Idle</string>
+
+    <string name="whatsapp_hack_title">WhatsApp Message Volume</string>
+    <string name="whatsapp_hack_summary">Use handsfree mic to record whatsapp voice messages</string>
+
 </resources>

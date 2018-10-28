@@ -192,6 +192,7 @@ on property:dev.bootcomplete=1
     write /proc/sys/vm/vfs_cache_pressure 60
 
     setprop pm.power_profile 1
+    start perfd
 
 on property:init.svc.recovery=running
     trigger enable-low-power
