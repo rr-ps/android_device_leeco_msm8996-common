@@ -656,7 +656,7 @@ service ppd /vendor/bin/mm-pp-dpps
     user system
     group system graphics
     socket pps stream 0660 system system
-   writepid /dev/cpuset/system-background/tasks
+    writepid /dev/cpuset/system-background/tasks
     disabled
 
 on property:init.svc.surfaceflinger=stopped
@@ -677,15 +677,15 @@ on property:init.svc.zygote=running
 on property:init.svc.zygote=restarting
     stop ppd
 
-service fossctl /system/bin/ppd foss:on
-    user system
-    group system graphics
-    oneshot
-    disabled
-   writepid /dev/cpuset/system-background/tasks
+#service fossctl /system/bin/ppd foss:on
+#    user system
+#    group system graphics
+#    oneshot
+#    disabled
+#    writepid /dev/cpuset/system-background/tasks
 
-on property:sys.boot_completed=1
-    start fossctl
+#on property:sys.boot_completed=1
+#    start fossctl
 
 service tlocd /vendor/bin/tloc_daemon
     class late_start
@@ -698,13 +698,13 @@ service energy-awareness /vendor/bin/energy-awareness
     user root
     group system
     oneshot
-   writepid /dev/cpuset/system-background/tasks
+    writepid /dev/cpuset/system-background/tasks
 
 service mdtpd /vendor/bin/mdtpd
     class late_start
     user root
     group system radio drmrpc
-   writepid /dev/cpuset/system-background/tasks
+    writepid /dev/cpuset/system-background/tasks
 
 service iop /vendor/bin/iop
     class main
@@ -983,7 +983,7 @@ service qseeproxydaemon /vendor/bin/qseeproxydaemon
     class late_start
     user system
     group system
-    writepid /dev/cpuset/system-background/tasks
+   writepid /dev/cpuset/system-background/tasks
 
 service qcom-sh /system/bin/sh /init.qcom.sh
     class late_start
@@ -998,7 +998,7 @@ service hvdcp_opti /vendor/bin/hvdcp_opti
     seclabel u:r:hvdcp:s0
     writepid /dev/cpuset/system-background/tasks
 
-service charger /charger
+service charger /vendor/bin/charger
     class charger
     group system graphics log
     seclabel u:r:charger:s0
