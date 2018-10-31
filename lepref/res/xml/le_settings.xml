@@ -348,6 +348,13 @@
             android:title="@string/fx_hp_detect_title"
             android:summary="@string/fx_hp_detect_summary" />
 
+        <SwitchPreference
+            android:key="persist.vendor.audio.whatsapp"
+            android:defaultValue="false"
+            android:title="@string/whatsapp_hack_title"
+            android:summary="@string/whatsapp_hack_summary" />
+
+
 
         <!--SwitchPreference
             android:key="persist.pm.proximity_off"
