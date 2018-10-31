@@ -84,6 +84,7 @@ PRODUCT_PACKAGES += \
     android.hardware.audio@2.0-impl \
     android.hardware.audio@2.0-service \
     android.hardware.audio.effect@2.0-impl \
+    android.hardware.soundtrigger@2.0-impl \
     audio.a2dp.default \
     audio.primary.msm8996 \
     audio.r_submix.default \
@@ -422,5 +423,8 @@ BOARD_VENDOR_EXTRA_SYMLINKS += \
 # Model is set via init library
 PRODUCT_SYSTEM_PROPERTY_BLACKLIST := \
     ro.product.model
+
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/charger/charger:$(TARGET_COPY_OUT_VENDOR)/bin/charger \
 
 $(call inherit-product, vendor/leeco/msm8996-common/msm8996-common-vendor.mk)
